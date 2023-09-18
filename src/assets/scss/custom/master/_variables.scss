@@ -1,0 +1,58 @@
+/*----------------------------------------------------------------*\
+  Font Family
+\*----------------------------------------------------------------*/
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+$font-family-sans-serif: "Montserrat", sans-serif;
+
+/*----------------------------------------------------------------*\
+  Colors
+\*----------------------------------------------------------------*/
+
+// https://coolors.co/a1a1e2-f794bd-f47d7d-50b9d8-00a8a8-ffe007-6080b2-c07c98-93c497-eb955e
+
+$white: #ffffff;
+$blue: #6080b2 !default;
+$indigo: #6610f2 !default;
+$purple: #a1a1e2 !default;
+$pink: #f794bd !default;
+$red: #f47d7d !default;
+$orange: #eb955e !default;
+$yellow: #ffe007 !default;
+$green: #00a8a8 !default;
+$teal: #93c497 !default;
+$cyan: #50b9d8 !default;
+
+$primary: $orange !default;
+$secondary: #7a8288 !default;
+$success: $green !default;
+$info: $cyan !default;
+$warning: $yellow !default;
+$danger: $red !default;
+$light: #dde0e5 !default;
+$dark: #20374c !default;
+
+$theme-colors: (
+  "primary": $primary,
+  "secondary": $secondary,
+  "success": $success,
+  "info": $info,
+  "warning": $warning,
+  "danger": $danger,
+  "light": $light,
+) !default;
+
+$extra-colors: (
+  "teal": $teal,
+  "orange": $orange,
+  "purple": $purple,
+  "pink": $pink,
+  "dark": $dark,
+);
+
+$theme-colors: map-merge($theme-colors, $extra-colors);
+
+$body-bg: #f3f4f6;
+$input-bg: $white;
+$card-bg: $white;
+$enable-dark-mode: false;

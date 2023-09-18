@@ -1,0 +1,20 @@
+version: "3.9"
+
+networks:
+  node:
+
+services:
+  node:
+    image: node:current-alpine3.16
+    container_name: node
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+    ports:
+      - 3000:3000
+    deploy:
+      resources:
+        limits:
+          memory: 1GB
+    networks:
+      - node

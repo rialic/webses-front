@@ -1,0 +1,47 @@
+.btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show > .btn-primary.dropdown-toggle,
+.btn-secondary:not(:disabled):not(.disabled).active, .btn-secondary:not(:disabled):not(.disabled):active, .show > .btn-secondary.dropdown-toggle,
+.btn-success:not(:disabled):not(.disabled).active, .btn-success:not(:disabled):not(.disabled):active, .show > .btn-success.dropdown-toggle,
+.btn-info:not(:disabled):not(.disabled).active, .btn-info:not(:disabled):not(.disabled):active, .show > .btn-info.dropdown-toggle,
+.btn-danger:not(:disabled):not(.disabled).active, .btn-danger:not(:disabled):not(.disabled):active, .show > .btn-danger.dropdown-toggle,
+.btn-pink:not(:disabled):not(.disabled).active, .btn-pink:not(:disabled):not(.disabled):active, .show > .btn-pink.dropdown-toggle,
+.btn-purple:not(:disabled):not(.disabled).active, .btn-purple:not(:disabled):not(.disabled):active, .show > .btn-purple.dropdown-toggle,
+.btn-teal:not(:disabled):not(.disabled).active, .btn-teal:not(:disabled):not(.disabled):active, .show > .btn-teal.dropdown-toggle,
+.btn-orange:not(:disabled):not(.disabled).active, .btn-orange:not(:disabled):not(.disabled):active, .show > .btn-orange.dropdown-toggle {
+  color: #fff;
+}
+
+.btn-primary, .btn.bg-gradient-primary,
+.btn-secondary, .btn.bg-gradient-secondary,
+.btn-success, .btn.bg-gradient-success,
+.btn-info, .btn.bg-gradient-info,
+.btn-danger, .btn.bg-gradient-danger,
+.btn-pink, .btn.bg-gradient-pink,
+.btn-purple, .btn.bg-gradient-purple,
+.btn-teal, .btn.bg-gradient-teal,
+.btn-orange, .btn.bg-gradient-orange {
+  color: #fff;
+}
+
+.btn-primary:hover, .btn.bg-gradient-primary:hover,
+.btn-secondary:hover, .btn.bg-gradient-secondary:hover,
+.btn-success:hover, .btn.bg-gradient-success:hover,
+.btn-info:hover, .btn.bg-gradient-info:hover,
+.btn-danger:hover, .btn.bg-gradient-danger:hover,
+.btn-pink:hover, .btn.bg-gradient-pink:hover,
+.btn-purple:hover, .btn.bg-gradient-purple:hover,
+.btn-teal:hover, .btn.bg-gradient-teal:hover,
+.btn-orange:hover, .btn.bg-gradient-orange:hover {
+  color: #fff;
+}
+
+.btn-warning:not(:disabled):not(.disabled).active, .btn-warning:not(:disabled):not(.disabled):active, .show > .btn-warning.dropdown-toggle {
+  color: #000;
+}
+
+.btn-warning, .btn.bg-gradient-warning {
+  color: #000;
+}
+
+.btn-warning:hover, .btn.bg-gradient-warning:hover {
+  color: #000;
+}

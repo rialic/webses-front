@@ -1,0 +1,94 @@
+.vs__dropdown-menu {
+  display: block;
+  box-sizing: border-box;
+  position: absolute;
+  top: calc(100% - var(--vs-border-width));
+  left: 0;
+  z-index: var(--vs-dropdown-z-index);
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  max-height: rem(250px);
+  min-width: 100%;
+  overflow-y: auto;
+  box-shadow: var(--vs-dropdown-box-shadow);
+  border: var(--vs-border-width) var(--vs-border-style) var(--vs-border-color);
+  border-top-style: none;
+  border-radius: 0 0 var(--vs-border-radius) var(--vs-border-radius);
+  text-align: left;
+  list-style: none;
+  background: var(--vs-dropdown-bg);
+  color: var(--vs-dropdown-color);
+}
+
+.vs__dropdown-toggle {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  padding: 0;
+  appearance: none;
+  display: flex;
+  background: none;
+  border: 0;
+  white-space: normal;
+}
+
+.vs__dropdown-option {
+  line-height: 1.42857143;
+  display: block;
+  padding: rem(3px) rem(10px);
+  clear: both;
+  color: var(--vs-dropdown-option-color);
+  white-space: nowrap;
+  cursor: pointer;
+  border-bottom: rem(1px) solid var(--bs-border-color);
+}
+
+.vs__dropdown-option--highlight {
+  background: $primary;
+  color: var(--vs-dropdown-option--active-color);
+}
+
+.vs__clear {
+  display: none;
+}
+
+.vs__dropdown-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+  width: rem(14px);
+  height: rem(14px);
+  background-repeat: no-repeat;
+}
+
+.vs__selected {
+  display: flex;
+  align-items: center;
+  background-color: var(--vs-selected-bg);
+  border: 0;
+  border-radius: var(--vs-border-radius);
+  color: var(--vs-selected-color);
+  line-height: var(--vs-line-height);
+  margin: 0;
+  padding: rem(6px) rem(12px);
+  z-index: 0;
+}
+
+.vs__selected-options {
+  display: flex;
+  flex-basis: 100%;
+  flex-grow: 1;
+  flex-wrap: wrap;
+  padding: 0;
+  position: relative;
+}
+
+.vs__search, .vs__search:focus {
+  margin: 0;
+  border: 0;
+  padding: rem(6px) rem(10px);
+  line-height: var(--vs-line-height);
+}

@@ -1,0 +1,39 @@
+{
+  "name": "webses-front",
+  "private": true,
+  "packageManager": "yarn@3.5.0",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "yarn-enable": "corepack enable && yarn set version stable",
+    "yarn-enable-vscode": "yarn dlx @yarnpkg/sdks vscode",
+    "yarn-destroy": "rm -Rf .yarn && rm -Rf .vscode && rm -Rf .editorconfig && rm -Rf .pnp.cjs && rm -Rf .pnp.loader.mjs && rm -f .yarnrc.yml && rm -f yarn.lock && rm -Rf node_modules"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.4.0",
+    "@fortawesome/free-brands-svg-icons": "^6.4.0",
+    "@fortawesome/free-regular-svg-icons": "^6.4.0",
+    "@fortawesome/free-solid-svg-icons": "^6.4.0",
+    "@fortawesome/vue-fontawesome": "^3.0.3",
+    "@popperjs/core": "^2.11.7",
+    "axios": "^1.4.0",
+    "bootstrap": "^5.3",
+    "cleave.js": "^1.6.0",
+    "path": "^0.12.7",
+    "pinia": "^2.1.6",
+    "vue": "^3.3.4",
+    "vue-router": "4",
+    "vue-select": "beta"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-basic-ssl": "^1.0.1",
+    "@vitejs/plugin-vue": "^4.1.0",
+    "eslint": "^8.39.0",
+    "eslint-config-eslintx": "^1.0.7",
+    "eslint-plugin-vue": "^9.15.1",
+    "sass": "^1.62.0",
+    "vite": "^4.3.0"
+  }
+}

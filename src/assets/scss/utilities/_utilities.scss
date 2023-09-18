@@ -1,0 +1,360 @@
+/*----------------------------------------------------------------*\
+  FONT-SIZE | fs-x
+\*----------------------------------------------------------------*/
+$utilities: map-merge(
+  $utilities,
+  (
+    "font-size": (
+      property: font-size,
+      class: fs,
+      values: (
+        12: 0.75rem,
+        13: 0.8125rem,
+        14: 0.875rem,
+        15: 0.9375rem,
+        16: 1rem,
+        17: 1.0625rem,
+        18: 1.125rem,
+        19: 1.1875rem,
+        20: 1.25rem,
+        21: 1.3125rem,
+        22: 1.375rem,
+        23: 1.4375rem,
+        24: 1.5rem,
+      ),
+    ),
+  )
+);
+
+/*----------------------------------------------------------------*\
+  RESPONSIVE FONT SIZE fs:min-x:max-x
+\*----------------------------------------------------------------*/
+// Min Screen - Max Screen
+$minWidth: 375px;
+$maxWidth: 1440px;
+
+@mixin fluidType($minVw, $maxVw, $minFontSize, $maxFontSize) {
+  $u1: unit($minVw);
+  $u2: unit($maxVw);
+  $u3: unit($minFontSize);
+  $u4: unit($maxFontSize);
+
+  @if $u1 == $u2 and $u1 == $u3 and $u1 == $u4 {
+    & {
+      font-size: rem($minFontSize);
+
+      @media screen and (min-width: $minVw) {
+        font-size: calc(#{rem($minFontSize)} + #{stripUnit($maxFontSize - $minFontSize)} * ((100vw - #{rem($minVw)}) / #{stripUnit($maxVw - $minVw)}));
+      }
+
+      @media screen and (min-width: $maxVw) {
+        font-size: rem($maxFontSize);
+      }
+    }
+  }
+}
+
+@mixin responsiveFonts {
+  $fonts: (
+    12px: (16px, 17px, 18px, 19px, 20px, 21px, 22px, 23px, 24px), // fs:min-12:max-24
+    13px: (16px, 17px, 18px, 19px, 20px, 21px, 22px, 23px, 24px), // fs:min-13:max-24
+    14px: (16px, 17px, 18px, 19px, 20px, 21px, 22px, 23px, 24px), // fs:min-14:max-24
+    15px: (17px, 18px, 19px, 20px, 21px, 22px, 23px, 24px), // fs:min-15:max-24
+    16px: (18px, 19px, 20px, 21px, 22px, 23px, 24px), // fs:min-16:max-24
+    17px: (19px, 20px, 21px, 22px, 23px, 24px), // fs:min-17:max-24
+    18px: (20px, 21px, 22px, 23px, 24px) // fs:min-18:max-24
+  );
+
+  @each $minFontSize, $maxFontSizeList in $fonts {
+    @each $maxFontSize in $maxFontSizeList {
+      .fs\:min-#{stripUnit($minFontSize)}\:max-#{stripUnit($maxFontSize)} {
+        @include fluidType($minWidth, $maxWidth, $minFontSize, $maxFontSize);
+      }
+    }
+  }
+}
+
+@include responsiveFonts;
+
+/*----------------------------------------------------------------*\
+  WIDTH AND HEIGHT | vh-x
+\*----------------------------------------------------------------*/
+$utilities: map-merge(
+  $utilities,
+  (
+    "viewport-height": (
+      property: height,
+      class: vh,
+      values: (
+        25: 25vh,
+        50: 50vh,
+        75: 75vh,
+        100: 100vh,
+      ),
+    ),
+  )
+);
+
+/*----------------------------------------------------------------*\
+  Z-INDEX | z-index-x
+\*----------------------------------------------------------------*/
+$utilities: map-merge(
+  $utilities,
+  (
+    "z-index": (
+      property: z-index,
+      class: z-index,
+      values: (
+        1: 1,
+        2: 2,
+        3: 3,
+        4: 4,
+        5: 5,
+        10: 10,
+        50: 50,
+        100: 100,
+        500: 500,
+        999: 999,
+      ),
+    ),
+  )
+);
+
+/*----------------------------------------------------------------*\
+  SPACER
+\*----------------------------------------------------------------*/
+$spacer: 1rem;
+$spacers: (
+  6: $spacer * 4,
+  7: $spacer * 6,
+  8: $spacer * 8,
+  9: $spacer * 10,
+  10: $spacer * 12,
+  11: $spacer * 14,
+  12: $spacer * 16,
+);
+
+$utilities: map-merge(
+  $utilities,
+  (
+    "margin": map-merge(
+      map-get($utilities, "margin"),
+      (
+        values: map-merge(
+          map-get(map-get($utilities, "margin"), "values"),
+          $spacers
+        ),
+      ),
+    ),
+  )
+);
+
+$utilities: map-merge(
+  $utilities,
+  (
+    "margin-x": map-merge(
+      map-get($utilities, "margin-x"),
+      (
+        values: map-merge(
+          map-get(map-get($utilities, "margin-x"), "values"),
+          $spacers
+        ),
+      ),
+    ),
+  )
+);
+
+$utilities: map-merge(
+  $utilities,
+  (
+    "margin-y": map-merge(
+      map-get($utilities, "margin-y"),
+      (
+        values: map-merge(
+          map-get(map-get($utilities, "margin-y"), "values"),
+          $spacers
+        ),
+      ),
+    ),
+  )
+);
+
+$utilities: map-merge(
+  $utilities,
+  (
+    "margin-top": map-merge(
+      map-get($utilities, "margin-top"),
+      (
+        values: map-merge(
+          map-get(map-get($utilities, "margin-top"), "values"),
+          $spacers
+        ),
+      ),
+    ),
+  )
+);
+
+$utilities: map-merge(
+  $utilities,
+  (
+    "margin-end": map-merge(
+      map-get($utilities, "margin-end"),
+      (
+        values: map-merge(
+          map-get(map-get($utilities, "margin-end"), "values"),
+          $spacers
+        ),
+      ),
+    ),
+  )
+);
+
+$utilities: map-merge(
+  $utilities,
+  (
+    "margin-bottom": map-merge(
+      map-get($utilities, "margin-bottom"),
+      (
+        values: map-merge(
+          map-get(map-get($utilities, "margin-bottom"), "values"),
+          $spacers
+        ),
+      ),
+    ),
+  )
+);
+
+$utilities: map-merge(
+  $utilities,
+  (
+    "margin-start": map-merge(
+      map-get($utilities, "margin-start"),
+      (
+        values: map-merge(
+          map-get(map-get($utilities, "margin-start"), "values"),
+          $spacers
+        ),
+      ),
+    ),
+  )
+);
+
+$utilities: map-merge(
+  $utilities,
+  (
+    "padding": map-merge(
+      map-get($utilities, "padding"),
+      (
+        values: map-merge(
+          map-get(map-get($utilities, "padding"), "values"),
+          $spacers
+        ),
+      ),
+    ),
+  )
+);
+
+$utilities: map-merge(
+  $utilities,
+  (
+    "padding-x": map-merge(
+      map-get($utilities, "padding-x"),
+      (
+        values: map-merge(
+          map-get(map-get($utilities, "padding-x"), "values"),
+          $spacers
+        ),
+      ),
+    ),
+  )
+);
+
+$utilities: map-merge(
+  $utilities,
+  (
+    "padding-y": map-merge(
+      map-get($utilities, "padding-y"),
+      (
+        values: map-merge(
+          map-get(map-get($utilities, "padding-y"), "values"),
+          $spacers
+        ),
+      ),
+    ),
+  )
+);
+
+$utilities: map-merge(
+  $utilities,
+  (
+    "padding-top": map-merge(
+      map-get($utilities, "padding-top"),
+      (
+        values: map-merge(
+          map-get(map-get($utilities, "padding-top"), "values"),
+          $spacers
+        ),
+      ),
+    ),
+  )
+);
+
+$utilities: map-merge(
+  $utilities,
+  (
+    "padding-end": map-merge(
+      map-get($utilities, "padding-end"),
+      (
+        values: map-merge(
+          map-get(map-get($utilities, "padding-end"), "values"),
+          $spacers
+        ),
+      ),
+    ),
+  )
+);
+
+$utilities: map-merge(
+  $utilities,
+  (
+    "padding-bottom": map-merge(
+      map-get($utilities, "padding-bottom"),
+      (
+        values: map-merge(
+          map-get(map-get($utilities, "padding-bottom"), "values"),
+          $spacers
+        ),
+      ),
+    ),
+  )
+);
+
+$utilities: map-merge(
+  $utilities,
+  (
+    "padding-start": map-merge(
+      map-get($utilities, "padding-start"),
+      (
+        values: map-merge(
+          map-get(map-get($utilities, "padding-start"), "values"),
+          $spacers
+        ),
+      ),
+    ),
+  )
+);
+
+$utilities: map-merge(
+  $utilities,
+  (
+    "gap": map-merge(
+      map-get($utilities, "gap"),
+      (
+        values: map-merge(
+          map-get(map-get($utilities, "gap"), "values"),
+          $spacers
+        ),
+      ),
+    ),
+  )
+);
