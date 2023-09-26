@@ -14,3 +14,7 @@
   border-color: var(--bs-form-invalid-border-color);
   box-shadow: rgba(0, 0, 0, 0.05) rem(0px) rem(6px) rem(24px) rem(0px),
 }
+
+.is-invalid~.invalid-feedback, .is-invalid~.invalid-tooltip, .was-validated :invalid~.invalid-feedback, .was-validated :invalid~.invalid-tooltip {
+  display: block;
+}

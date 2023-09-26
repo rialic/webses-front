@@ -2,21 +2,28 @@
   <div class="form-floating">
     <vselect
       :name="name"
+      :disabled="disabled"
       :label="listLabel"
       placeholder=" "
-      class="form-vselect"
+      :class="[!$empty(error?.[name]) ? 'is-invalid' : '', 'form-vselect']"
       :value="props.selectedVal"
-      :reduce="list => list.uuid"
+      :reduce="list => list?.uuid || list.code"
       :options="list"
       v-model="selected">
+
+      <template #no-options>Nenhum resultado encontrado.</template>
     </vselect>
+
+    <span v-if="!$empty(error?.[name])" class="invalid-feedback m-0 fs-13 fw-semibold">
+      {{ error[name][0] }}
+    </span>
 
     <label class="form-label">{{ label }}</label>
   </div>
 </template>
 
 <script setup>
-import { h, ref, watch } from 'vue'
+import { h, ref, watch, inject } from 'vue'
 import vselect from 'vue-select'
 
 /* Addons */
@@ -30,6 +37,9 @@ vselect.props.components.default = () => ({
   }
 })
 
+/* helper */
+const $empty = inject('$empty')
+
 /* datas */
 const selected = ref()
 
@@ -41,6 +51,10 @@ const props = defineProps({
   name: {
     type: String,
     required: true
+  },
+  disabled: {
+    type: Boolean,
+    required: false
   },
   selectedVal: {
     type: String,
@@ -65,6 +79,10 @@ const props = defineProps({
   modelValue: {
     required: true
   },
+  error: {
+    type: Object,
+    default: () => {}
+  }
 })
 
 /* watch */

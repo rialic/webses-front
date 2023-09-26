@@ -13,14 +13,14 @@
 
       <form @submit.prevent="onLoginDone(login(form))">
         <div class="mb-4">
-          <v-input :label="'Email, CPF'" :name="'email'" v-model="form.email" :errors="errors" />
+          <v-input :label="'Email, CPF'" :name="'email'" v-model="form.email" :error="errors" />
         </div>
 
         <div class="mb-4">
-          <v-input :label="'Senha'" :type="'password'" :name="'password'" v-model="form.password" :errors="errors" />
+          <v-input :label="'Senha'" :type="'password'" :name="'password'" v-model="form.password" :error="errors" />
         </div>
 
-        <v-check class="mb-3" :label="'Lembrar-me'" :name="'remember-me'" :checked="false" v-model="form.remember_me" :errors="errors">
+        <v-check class="mb-3" :label="'Lembrar-me'" :name="'remember-me'" :checked="false" v-model="form.remember_me">
         </v-check>
 
         <div class="d-grid mb-0 text-center">
@@ -53,7 +53,7 @@
 <script setup>
 // configs
 import { ref, inject } from 'vue'
-import { login, errors } from '@/auth'
+import { login } from '@/auth'
 
 // helper
 const $logo = inject('$logo')
@@ -61,17 +61,37 @@ const $logo = inject('$logo')
 // images
 const mainLogo = $logo.mainLogo
 
-// datas
-const form = ref({
-  email: null,
-  password: null,
-  remember_me: false,
-  device_name: 'chrome'
-})
+const {
+  errors,
+  form
+} = (() => {
+  return {
+    errors: ref(null),
+    form: ref({
+      email: null,
+      password: null,
+      remember_me: false,
+      device_name: 'chrome'
+    })
+  }
+})()
 
 // methods
-function onLoginDone() {
-  //
+async function onLoginDone(response) {
+  const status = (await response).status
+
+  console.log('Before => ', form.value)
+
+  if (status === 422) {
+    errors.value = null
+    errors.value = (await response).errors
+
+    console.log('After => ', form.value)
+
+    return
+  }
+
+  console.log('Login')
 }
 </script>
 

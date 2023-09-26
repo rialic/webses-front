@@ -15,6 +15,14 @@
   border-width: 0.125rem;
 }
 
+.form-vselect.is-invalid {
+  border: var(--bs-border-width) solid var(--bs-red);
+}
+
+.form-vselect.is-invalid .vs__dropdown-toggle {
+  border: var(--bs-border-width) solid var(--bs-red);
+}
+
 .form-floating label {
   position: absolute;
   top: 0;
@@ -57,7 +65,6 @@
   height: 100%;
 }
 
-// TODO RETIRAR O INPUT SEARCH
 .form-floating > .form-vselect:has(:not(.vs__dropdown-menu)) .vs__search {
   padding: 0;
   height: 0;

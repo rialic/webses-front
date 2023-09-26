@@ -20,6 +20,12 @@ export default defineConfig({
   },
   plugins: [
     basicSsl(),
-    vue()
+    vue({
+      template: {
+        compilerOptions: {
+          isCustomElement: (tag) => ['nprogress-container'].includes(tag)
+        }
+      }
+    })
   ],
 })

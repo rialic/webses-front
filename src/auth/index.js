@@ -1,15 +1,15 @@
-import { reactive, computed, ref } from 'vue'
+import { reactive, computed } from 'vue'
 import axios from '@/configs/axios'
 
+
 export const {
+  register,
   login,
   logout,
   attempt,
-  errors,
   authenticated,
   user
 } = (() => {
-  const errors = ref({})
   const state = reactive({
     authenticated: false,
     user: {}
@@ -47,22 +47,24 @@ export const {
     }
   }
 
-  async function login(form) {
+  async function login(data) {
     await axios.get('sanctum/csrf-cookie')
+    const response = await axios.post('login', data)
 
-    try {
-      const response = await axios.post('login', form)
-
-      if (response.status === 200) {
-        localStorage.setItem('webses_token', response.data.token)
-      }
-
-      attempt()
-    } catch (exception) {
-      if (exception.response.status === 422) {
-        errors.value = exception.response.data.errors
-      }
+    if (response.status === 200) {
+      localStorage.setItem('webses_token', response.data.token)
     }
+
+    attempt()
+
+    if (response.status === 422) {
+      return response
+    }
+  }
+
+  async function register(data) {
+    const form = { ...data, cpf: data.cpf.replaceAll('.', '').replace('-', ''), device_name: navigator.userAgent }
+    return await axios.post('register', form)
   }
 
   async function logout() {
@@ -79,10 +81,10 @@ export const {
   }
 
   return {
+    register,
     login,
     logout,
     attempt,
-    errors,
     authenticated: getAuthenticated(),
     user: getUser()
   }

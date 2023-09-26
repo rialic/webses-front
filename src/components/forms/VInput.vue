@@ -4,7 +4,7 @@
       data-js="mask"
       :id="name"
       :type="type"
-      :class="[!$empty(errors?.[name]) ? 'is-invalid' : '', 'form-control']"
+      :class="[!$empty(error?.[name]) ? 'is-invalid' : '', 'form-control']"
       :value="modelValue"
       v-cleave="computedOpt.getCPFMaskOptions"
       @input="$emit('update:modelValue', $event.target.value)"
@@ -12,16 +12,17 @@
 
     <label for="{{ name }}" class="form-label">{{ label }}</label>
 
-    <span v-if="!$empty(errors?.[name])" class="fs-13 fw-semibold text-danger">
-      {{ errors[name][0] }}
+    <span v-if="!$empty(error?.[name])" class="invalid-feedback m-0 fs-13 fw-semibold">
+      {{ error[name][0] }}
     </span>
   </div>
 
   <div v-else class="form-floating">
     <input
+      :disabled="disabled"
       :id="name"
       :type="type"
-      :class="[!$empty(errors?.[name]) ? 'is-invalid' : '', 'form-control']"
+      :class="[!$empty(error?.[name]) ? 'is-invalid' : '', 'form-control']"
       :value="modelValue"
       @blur.prevent="$emit('update:modelValue', $event.target.value.trim())"
       @input.prevent="$emit('update:modelValue', $trimInput($event))"
@@ -29,8 +30,8 @@
 
     <label for="{{ name }}" class="form-label">{{ label }}</label>
 
-    <span v-if="!$empty(errors?.[name])" class="fs-13 fw-semibold text-danger">
-      {{ errors[name][0] }}
+    <span v-if="!$empty(error?.[name])" class="invalid-feedback m-0 fs-13 fw-semibold">
+      {{ error[name][0] }}
     </span>
   </div>
 </template>
@@ -49,6 +50,10 @@ defineProps({
     type: String,
     required: true
   },
+  disabled: {
+    type: Boolean,
+    default: false
+  },
   label: {
     type: String,
     default: 'text'
@@ -64,9 +69,9 @@ defineProps({
     type: String,
     default: null
   },
-  errors: {
+  error: {
     type: Object,
-    default: () => {}
+    default: null
   }
 })
 

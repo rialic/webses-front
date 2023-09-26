@@ -12,7 +12,7 @@ export const useStateStore = (defineStore('stateStore', {
       try {
         if (response.status === 200) {
 
-          return response.data.data
+          return response.data
         }
       } catch (error) {
         //
