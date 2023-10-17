@@ -1,3 +1,30 @@
+.form-floating {
+  label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: rem(6px) rem(12px);
+    height: rem(38px);
+    line-height: rem(24px);
+    pointer-events: none;
+    border: 0;
+    transform-origin: 0 0;
+    transition: opacity 0.1s ease-in-out, transform 0.1s ease-in-out;
+    margin: 0;
+  }
+}
+
+.form-control,
+.form-control-plaintext {
+  padding: rem(6px) rem(12px);
+
+  ~ label {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+  }
+}
+
 .form-vselect {
   display: block;
   width: 100%;
@@ -13,102 +40,73 @@
   border-radius: var(--bs-border-radius);
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   border-width: 0.125rem;
+
+  ~ label {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+  }
 }
 
-.form-vselect.is-invalid {
-  border: var(--bs-border-width) solid var(--bs-red);
-}
+.form-floating {
+  .form-control,
+  .form-control-plaintext,
+  .form-vselect,
+  .form-vselect-plaintext {
+    height: rem(38px);
+    line-height: rem(24px);
+  }
 
-.form-vselect.is-invalid .vs__dropdown-toggle {
-  border: var(--bs-border-width) solid var(--bs-red);
-}
+  .form-control,
+  .form-control-plaintext {
+    min-height: unset;
 
-.form-floating label {
-  position: absolute;
-  top: 0;
-  left: 0;
-  padding: rem(6px) rem(12px);
-  height: rem(38px);
-  line-height: rem(24px);
-  pointer-events: none;
-  border: 0;
-  transform-origin: 0 0;
-  transition: opacity 0.1s ease-in-out, transform 0.1s ease-in-out;
-  margin: 0;
-}
+    &:focus,
+    &:not(:placeholder-shown) {
+      padding: rem(6px) rem(12px);
 
-.form-floating > .form-control,
-.form-floating > .form-control-plaintext {
-  padding: rem(6px) rem(12px);
-}
+      ~ label {
+          width: 100%;
+          color: var(--bs-body-color-rgb);
+          opacity: 0.85;
+          transform: scale(0.75) translateY(-80%);
+          -moz-transform: scale(0.75) translateY(-80%);
+      }
 
-.form-floating > .form-vselect,
-.form-floating > .form-vselect-plaintext {
-  padding: 0;
-}
+      ~ label::after {
+          background-color: transparent;
+      }
+    }
+  }
 
-.form-floating > .form-control,
-.form-floating > .form-control-plaintext {
-  height: rem(38px);
-  min-height: unset;
-  line-height: rem(24px);
-}
+  .form-vselect,
+  .form-vselect-plaintext {
+    height: 100%;
+    min-height: rem(38px);
 
-.form-floating > .form-vselect,
-.form-floating > .form-vselect-plaintext {
-  height: rem(38px);
-  min-height: rem(38px);
-  line-height: rem(24px);
-}
+    &:focus,
+    &:not(:placeholder-shown) {
+      padding: 0;
+    }
 
-.form-floating > .form-vselect:has(.vs__selected) {
-  height: 100%;
-}
+    &.vs--searching ~label, &.vs--selected ~label {
+      width: 100%;
+      color: var(--bs-body-color-rgb);
+      opacity: 0.85;
+      transform: scale(0.75) translateY(-80%);
+      -moz-transform: scale(0.75) translateY(-80%);
+    }
 
-.form-floating > .form-vselect:has(:not(.vs__dropdown-menu)) .vs__search {
-  padding: 0;
-  height: 0;
-  line-height: 0;
-}
+    .vs__search {
+      padding: 0;
+      height: 0;
+      line-height: 0;
+    }
 
-.form-floating > .form-vselect:has(.vs__dropdown-menu) .vs__search {
-  padding: rem(6px) rem(10px);
-  height: inherit;
-  line-height: var(--vs-line-height);
-}
-
-.form-floating > .form-control:focus,
-.form-floating > .form-control:not(:placeholder-shown),
-.form-floating > .form-control-plaintext:focus,
-.form-floating > .form-control-plaintext:not(:placeholder-shown) {
-  padding: rem(6px) rem(12px);
-}
-
-.form-floating > .form-vselect:focus,
-.form-floating > .form-vselect:not(:placeholder-shown),
-.form-floating > .form-vselect-plaintext:focus,
-.form-floating > .form-vselect-plaintext:not(:placeholder-shown) {
-  padding: 0;
-}
-
-.form-floating > .form-control:focus ~ label,
-.form-floating > .form-control:not(:placeholder-shown) ~ label,
-.form-floating > .form-control-plaintext ~ label,
-.form-floating > .form-vselect:focus ~ label,
-.form-floating .form-vselect:has(.vs__search:not(:placeholder-shown)) ~ label,
-.form-floating > .form-vselect-plaintext ~ label
-{
-  width: 100%;
-  color: var(--bs-body-color-rgb);
-  opacity: 0.85;
-  transform: scale(0.75) translateY(-80%);
-}
-
-.form-floating > .form-control:focus ~ label::after,
-.form-floating > .form-control:not(:placeholder-shown) ~ label::after,
-.form-floating > .form-control-plaintext ~ label::after,
-.form-floating > .form-vselect:focus ~ label::after,
-.form-floating > .form-vselect:not(:placeholder-shown) ~ label::after,
-.form-floating > .form-vselect-plaintext ~ label::after {
-  background-color: transparent;
+    &.vs--open .vs__search {
+      padding: rem(6px) rem(10px);
+      height: inherit;
+      line-height: var(--vs-line-height);
+    }
+  }
 }

@@ -7,9 +7,17 @@ import {
 
 import {
   fas,
-  faEnvelope
+  faEnvelope,
+  faCircleInfo
 } from '@fortawesome/free-solid-svg-icons'
 
-library.add(fas, fab, faEnvelope)
+import {
+  far,
+  faPaperPlane,
+  faCircleCheck,
+  faCircleXmark,
+} from '@fortawesome/free-regular-svg-icons'
+
+library.add(fas, fab, far, faEnvelope, faCircleInfo, faPaperPlane, faCircleCheck, faCircleXmark)
 
 export default FontAwesomeIcon

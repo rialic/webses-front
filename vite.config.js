@@ -3,6 +3,7 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import basicSsl from '@vitejs/plugin-basic-ssl'
 import * as path from 'path'
+import autoprefixer from 'autoprefixer'
 
 export default defineConfig({
   server: {
@@ -28,4 +29,11 @@ export default defineConfig({
       }
     })
   ],
+  css: {
+    postcss: {
+      plugins: [
+        autoprefixer({})
+      ],
+    }
+  }
 })

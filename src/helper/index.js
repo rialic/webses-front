@@ -80,12 +80,22 @@ export const {
 
   function lowerCaseName(val) {
     const exceptionNameList = ['da', 'das', 'de', 'des', 'do', 'dos', 'du', 'em']
+    const acronymsList = [
+      'AC', 'AL', 'AM', 'AP', 'BA', 'CE', 'DF', 'ES',
+      'GO', 'MA', 'MG', 'MS', 'MT', 'PA', 'PB', 'PE',
+      'PI', 'PR', 'RJ', 'RN', 'RO', 'RR', 'RS', 'SC',
+      'SE', 'SP', 'TO', 'UBS', 'USF', 'PM', 'APA', 'I', 'II', 'III', 'IV', 'I'
+    ]
 
     return val.split(' ').reduce((acc, val) => {
       if (exceptionNameList.includes(val.toLowerCase())) {
         acc += val.toLowerCase() + ' '
 
         return acc
+      }
+
+      if (acronymsList.includes(val)) {
+        return acc += val + ' '
       }
 
       acc += val.slice('0', 1) + val.slice(1).toLowerCase() + ' '

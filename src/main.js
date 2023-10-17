@@ -16,15 +16,14 @@ import { logo, getSubDomain, empty, parseFilters, trimInput, lowerCaseName } fro
 
 /* Components */
 import FontAwesomeIcon from '@/fontawesome'
+import VToaster from '@/components/notifications/VToaster.vue'
 import VInput from '@/components/forms/VInput.vue'
 import VCheck from '@/components/forms/VCheck.vue'
 import VSelect from '@/components/forms/VSelect.vue'
 
-/* Others */
-import { attempt } from '@/auth'
-
 /* Custom components */
 app.component('fa', FontAwesomeIcon)
+app.component('v-toaster', VToaster)
 app.component('v-input', VInput)
 app.component('v-check', VCheck)
 app.component('v-select', VSelect)
@@ -45,6 +44,4 @@ app.directive('cleave', (el, binding) => {
   }
 })
 
-attempt().then(() => {
-  app.use(router).use(createPinia()).mount('#app')
-})
+app.use(router).use(createPinia()).mount('#app')

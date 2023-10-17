@@ -24,7 +24,7 @@
           <h6 class="mb-4 fw-semibold">Dados de acesso</h6>
 
           <div class="mb-4">
-            <v-input :disabled="Boolean(user)" :label="'Nome'" :name="'nome'" v-model="form.name" :error="errors"/>
+            <v-input :disabled="Boolean(user)" :label="'Nome'" :name="'name'" v-model="form.name" :error="errors"/>
           </div>
 
           <div class="mb-4">
@@ -50,7 +50,7 @@
               :name="'state'"
               :listLabel="'acronym'"
               :label="'Estado'"
-              :list="useStateStore.stateList"
+              :list="stateStore.stateList"
               :selectedVal="form.state"
               v-model="form.state"
               :error="errors">
@@ -62,7 +62,7 @@
               :name="'city'"
               :listLabel="'name'"
               :label="'Cidade'"
-              :list="useCityStore.cityList"
+              :list="cityStore.cityList"
               :reset="cityReset"
               @onResetDone="cityReset = $event"
               :selectedVal="form.city"
@@ -78,7 +78,7 @@
               :name="'establishment'"
               :listLabel="'name'"
               :label="'Unidade de Saúde'"
-              :list="useEstablishmentStore.establishmentList"
+              :list="establishmentStore.establishmentList"
               :reset="establishmentReset"
               @onResetDone="establishmentReset = $event"
               :selectedVal="form.establishment"
@@ -93,7 +93,7 @@
               :name="'cbo'"
               :listLabel="'name'"
               :label="'CBO'"
-              :list="useCBOStore.cboList"
+              :list="cboStore.cboList"
               :selectedVal="form.cbo"
               v-model="form.cbo"
               :error="errors">
@@ -105,7 +105,7 @@
           </div>
 
           <div class="mb-4">
-            <v-input :type="'password'" :label="'Confirma senha'" :name="'confirm_password'" v-model="form.confirm_password" :error="errors"/>
+            <v-input :type="'password'" :label="'Confirma senha'" :name="'password_confirmation'" v-model="form.password_confirmation" :error="errors"/>
           </div>
 
           <div class="d-grid mb-0 text-center">
@@ -129,7 +129,11 @@
 /* configs */
 import { ref, inject, onMounted, watch } from 'vue'
 import { register } from '@/auth'
+import { useRouter } from 'vue-router'
 import axios from '@/configs/axios'
+
+/* router */
+const router = useRouter()
 
 /* store */
 import { useStateStore } from '@/store/stateStore'
@@ -137,7 +141,13 @@ import { useCityStore } from '@/store/cityStore'
 import { useEstablishmentStore } from '@/store/establishmentStore'
 import { useCBOStore } from '@/store/cboStore'
 
+const stateStore = useStateStore()
+const cityStore = useCityStore()
+const establishmentStore = useEstablishmentStore()
+const cboStore = useCBOStore()
+
 /* helper */
+const $empty = inject('$empty')
 const $logo = inject('$logo')
 const $parseFilters = inject('$parseFilters')
 const $lowerCaseName = inject('$lowerCaseName')
@@ -149,6 +159,7 @@ const {
   showRegisterForm,
   showSpinner,
   user,
+  cpfSearched,
   sexList,
   form,
   cityReset,
@@ -159,26 +170,27 @@ const {
     mainLogo: $logo.mainLogo,
     showRegisterForm: ref(false),
     showSpinner: ref(false),
-    user: ref(),
+    user: ref(null),
+    cpfSearched: ref(''),
     sexList: [{ label: 'Masculino', code: 'm' }, { label: 'Feminino', code: 'f' }],
-    form: ref({ cpf: null, name: null, sex: null, state: null, city: null, establishment: null, cbo: null, email: null, password: null, confirm_password: null }),
+    form: ref({ cpf: null, name: null, sex: null, state: null, city: null, establishment: null, cbo: null, email: null, password: null, password_confirmation: null }),
     cityReset: ref(false),
     establishmentReset: ref(false)
   }
 })()
 
 onMounted(async() => {
-  useStateStore.stateList = await useStateStore.getStates()
-  useCBOStore.cboList = await useCBOStore.getCBO()
+  stateStore.stateList = (await stateStore.getStates()).data
+  cboStore.cboList = (await cboStore.getCBO()).data
 })
 
 /* watch */
 watch(() => [form.value.state, user], async() => {
   if(form.value.state) {
     const filterParams = $parseFilters({ state: form.value.state })
-    const cityList = await useCityStore.getCities(filterParams)
+    const cityList = (await cityStore.getCities(filterParams))?.data
 
-    useCityStore.cityList = cityList.map((city) => ({ ...city, 'name': $lowerCaseName(city.name) }) )
+    cityStore.cityList = cityList.map((city) => ({ ...city, 'name': $lowerCaseName(city.name) }) )
 
     if (form.value.city) {
       form.value.city = null
@@ -188,7 +200,7 @@ watch(() => [form.value.state, user], async() => {
     }
 
     if (user.value.relationship) {
-      const city = useCityStore.cityList.find((city) => city.ibge_code_city === user.value.relationship.coMun)
+      const city = cityStore.cityList.find((city) => city.ibge_code === user.value.relationship.coMun)
       form.value.city = city?.uuid
     }
   }
@@ -198,8 +210,8 @@ watch(() => form.value.city, async() => {
   if (form.value.city) {
     const filterParams = $parseFilters({ city: form.value.city, legal_nature: 'ADMINISTRAÇÃO PÚBLICA' })
 
-    const establishmentList = await useEstablishmentStore.getEstablishments(filterParams)
-    useEstablishmentStore.establishmentList = establishmentList.map((establishment) => ({ ...establishment, 'name': $lowerCaseName(establishment.name) }))
+    const establishmentList = (await establishmentStore.getEstablishments(filterParams))?.data
+    establishmentStore.establishmentList = establishmentList.map((establishment) => ({ ...establishment, 'name': $lowerCaseName(establishment.name) }))
 
     if (form.value.establishment) {
       form.value.establishment = null
@@ -207,7 +219,7 @@ watch(() => form.value.city, async() => {
     }
 
     if (user.value.relationship) {
-      const establishment = useEstablishmentStore.establishmentList.find((establishment) => establishment.cnes === user.value.relationship.cnes)
+      const establishment = establishmentStore.establishmentList.find((establishment) => establishment.cnes === user.value.relationship.cnes)
       form.value.establishment = establishment?.uuid
     }
   }
@@ -219,10 +231,12 @@ async function onSearchCPFDataCNES(inputElement) {
   const cpfRegex = /^[0-9]{3}\.[0-9]{3}\.[0-9]{3}-[0-9]{2}$/g
   const isValidCPF = cpfRegex.test(cpf)
 
-  if (isValidCPF) {
+  if (isValidCPF && (cpf !== cpfSearched.value)) {
     showSpinner.value = true
-    const response = await axios.get(`api/datacnes-user?filter:cpf=${cpf.replaceAll('.', '').replace('-', '')}`)
+    const response = await axios.get(`datacnes-user?filter:cpf=${cpf.replaceAll('.', '').replace('-', '')}`)
+
     showRegisterForm.value = true
+    cpfSearched.value = cpf
     clearFields()
 
     if (response.status === 200) {
@@ -236,8 +250,8 @@ async function onSearchCPFDataCNES(inputElement) {
           user.value.relationship = user.value.vinculos.find((relationship) => relationship.tpSusNaoSus === 'S')
 
           if (user.value.relationship) {
-            const state = useStateStore.stateList.find((state) => state.acronym === user.value.relationship.estado)
-            const cbo = useCBOStore.cboList.find((cbo) => cbo.code === user.value.relationship.cbo)
+            const state = stateStore.stateList.find((state) => state.acronym === user.value.relationship.estado)
+            const cbo = cboStore.cboList.find((cbo) => cbo.code === user.value.relationship.cbo)
 
             form.value.state = state.uuid
             form.value.cbo = cbo?.uuid
@@ -259,7 +273,13 @@ async function onSearchCPFDataCNES(inputElement) {
     return
   }
 
-  user.value = null
+  if (isValidCPF || (!$empty(cpf) && cpf === cpfSearched.value)) {
+    cpfSearched.value = cpf
+    showRegisterForm.value = true
+
+    return
+  }
+
   showRegisterForm.value = false
 }
 
@@ -278,8 +298,8 @@ function clearFields() {
   establishmentReset.value = true
   cityReset.value = true
 
-  useEstablishmentStore.establishmentList = []
-  useCityStore.cityList = []
+  establishmentStore.establishmentList = []
+  cityStore.cityList = []
 
   errors.value = null
 }
@@ -293,6 +313,8 @@ async function onRegisterDone(response) {
 
     return
   }
+
+  router.push({ name: 'auth.verify-email', replace: true })
 }
 </script>
 

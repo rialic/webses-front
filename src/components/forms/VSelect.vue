@@ -5,7 +5,7 @@
       :disabled="disabled"
       :label="listLabel"
       placeholder=" "
-      :class="[!$empty(error?.[name]) ? 'is-invalid' : '', 'form-vselect']"
+      :class="[!$empty(error?.[name]) ? 'is-invalid' : '', 'form-vselect', {'vs--selected' : selected}]"
       :value="props.selectedVal"
       :reduce="list => list?.uuid || list.code"
       :options="list"

@@ -51,14 +51,17 @@
 </template>
 
 <script setup>
-// configs
+/* configs */
 import { ref, inject } from 'vue'
+import { useRouter } from 'vue-router'
 import { login } from '@/auth'
 
-// helper
+const router = useRouter()
+
+/* helper */
 const $logo = inject('$logo')
 
-// images
+/* images */
 const mainLogo = $logo.mainLogo
 
 const {
@@ -76,22 +79,20 @@ const {
   }
 })()
 
-// methods
+/* methods */
 async function onLoginDone(response) {
   const status = (await response).status
-
-  console.log('Before => ', form.value)
 
   if (status === 422) {
     errors.value = null
     errors.value = (await response).errors
 
-    console.log('After => ', form.value)
-
     return
   }
 
-  console.log('Login')
+  if (status === 200) {
+    router.push({ name: 'home', replace: true })
+  }
 }
 </script>
 
