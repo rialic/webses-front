@@ -37,7 +37,7 @@ axios.interceptors.response.use(
     NProgress.done()
 
     if (!response.data?.data) {
-      return { data: response.data?.data , status: response.status }
+      return { data: response.data?.data || response.data , status: response.status }
     }
 
     return { data: Array.isArray(response.data?.data) ? [...response.data.data] : response.data.data , status: response.status }

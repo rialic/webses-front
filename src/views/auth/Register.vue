@@ -1,126 +1,132 @@
 <template>
-  <div class="card">
-    <div class="card-body p-4">
-      <div class="text-center w-100 m-auto">
-        <div class="d-flex justify-content-center">
-          <a href="index.html">
-            <img :src="mainLogo" alt="" height="80">
-          </a>
+  <div class="container-fluid h-100">
+    <div class="row align-items-center justify-content-center h-100">
+      <div class="col-md-8 col-lg-6 col-xl-3">
+        <div class="card">
+          <div class="card-body p-4">
+            <div class="text-center w-100 m-auto">
+              <div class="d-flex justify-content-center">
+                <a href="index.html">
+                  <img :src="mainLogo" alt="" height="80">
+                </a>
+              </div>
+
+              <p class="mb-4 mt-3">Informe seus dados para ter acesso ao sistema.</p>
+            </div>
+
+            <form @submit.prevent="onRegisterDone(register(form))" class="needs-validation was-validated" novalidate>
+              <div class="d-flex column-gap-2 align-items-center">
+                <v-input class="flex-grow-1" :label="'CPF'" @input.prevent="onSearchCPFDataCNES" :name="'cpf'" :mask="'cpf'" v-model="form.cpf" :error="errors"/>
+
+                <div v-if="showSpinner" class="spinner-border text-primary spinner-border-sm"></div>
+              </div>
+
+              <div v-show="showRegisterForm">
+                <hr class="my-3">
+
+                <h6 class="mb-4 fw-semibold">Dados de acesso</h6>
+
+                <div class="mb-4">
+                  <v-input :disabled="Boolean(user)" :label="'Nome'" :name="'name'" v-model="form.name" :error="errors"/>
+                </div>
+
+                <div class="mb-4">
+                  <v-select
+                    :name="'sex'"
+                    :listLabel="'label'"
+                    :label="'Sexo'"
+                    :list="sexList"
+                    :selectedVal="form.sex"
+                    v-model="form.sex"
+                    :error="errors">
+                  </v-select>
+                </div>
+
+                <div class="mb-4">
+                  <v-input :label="'Email'" :name="'email'" v-model="form.email" :error="errors"/>
+                </div>
+
+                <div class="d-flex mb-4 column-gap-2">
+                  <v-select
+                    class="w-25"
+                    :disabled="Boolean(user?.relationship) && Boolean(form.state)"
+                    :name="'state'"
+                    :listLabel="'acronym'"
+                    :label="'Estado'"
+                    :list="stateStore.stateList"
+                    :selectedVal="form.state"
+                    v-model="form.state"
+                    :error="errors">
+                  </v-select>
+
+                  <v-select
+                    class="flex-fill"
+                    :disabled="Boolean(user?.relationship) && Boolean(form.city)"
+                    :name="'city'"
+                    :listLabel="'name'"
+                    :label="'Cidade'"
+                    :list="cityStore.cityList"
+                    :reset="cityReset"
+                    @onResetDone="cityReset = $event"
+                    :selectedVal="form.city"
+                    v-model="form.city"
+                    :error="errors">
+                  </v-select>
+                </div>
+
+                <div class="mb-4">
+                  <v-select
+                    class="flex-fill"
+                    :disabled="Boolean(user?.relationship) && Boolean(form.establishment)"
+                    :name="'establishment'"
+                    :listLabel="'name'"
+                    :label="'Unidade de Saúde'"
+                    :list="establishmentStore.establishmentList"
+                    :reset="establishmentReset"
+                    @onResetDone="establishmentReset = $event"
+                    :selectedVal="form.establishment"
+                    v-model="form.establishment"
+                    :error="errors">
+                  </v-select>
+                </div>
+
+                <div class="mb-4">
+                  <v-select
+                    :disabled="Boolean(user?.relationship) && Boolean(form.cbo)"
+                    :name="'cbo'"
+                    :listLabel="'name'"
+                    :label="'CBO'"
+                    :list="cboStore.cboList"
+                    :selectedVal="form.cbo"
+                    v-model="form.cbo"
+                    :error="errors">
+                  </v-select>
+                </div>
+
+                <div class="mb-4">
+                  <v-input :type="'password'" :label="'Senha'" :name="'password'" v-model="form.password" :error="errors"/>
+                </div>
+
+                <div class="mb-4">
+                  <v-input :type="'password'" :label="'Confirma senha'" :name="'password_confirmation'" v-model="form.password_confirmation" :error="errors"/>
+                </div>
+
+                <div class="d-grid mb-0 text-center">
+                  <button class="btn btn-primary fw-semibold" type="submit"> Cadastrar </button>
+                </div>
+              </div>
+            </form>
+          </div>
         </div>
 
-        <p class="mb-4 mt-3">Informe seus dados para ter acesso ao sistema.</p>
+        <div class="row mt-3">
+          <div class="col-12 text-center">
+            <p class="text-muted">Já possui uma conta?
+              <router-link :to="{ name: 'auth.login' }" class="text-primary fw-semibold ms-1">Login</router-link>
+            </p>
+          </div>
+        </div>
       </div>
-
-      <form @submit.prevent="onRegisterDone(register(form))" class="needs-validation was-validated" novalidate>
-        <div class="d-flex column-gap-2 align-items-center">
-          <v-input class="flex-grow-1" :label="'CPF'" @input.prevent="onSearchCPFDataCNES" :name="'cpf'" :mask="'cpf'" v-model="form.cpf" :error="errors"/>
-
-          <div v-if="showSpinner" class="spinner-border text-primary spinner-border-sm"></div>
-        </div>
-
-        <div v-show="showRegisterForm">
-          <hr class="my-3">
-
-          <h6 class="mb-4 fw-semibold">Dados de acesso</h6>
-
-          <div class="mb-4">
-            <v-input :disabled="Boolean(user)" :label="'Nome'" :name="'name'" v-model="form.name" :error="errors"/>
-          </div>
-
-          <div class="mb-4">
-            <v-select
-              :name="'sex'"
-              :listLabel="'label'"
-              :label="'Sexo'"
-              :list="sexList"
-              :selectedVal="form.sex"
-              v-model="form.sex"
-              :error="errors">
-            </v-select>
-          </div>
-
-          <div class="mb-4">
-            <v-input :label="'Email'" :name="'email'" v-model="form.email" :error="errors"/>
-          </div>
-
-          <div class="d-flex mb-4 column-gap-2">
-            <v-select
-              class="w-25"
-              :disabled="Boolean(user?.relationship) && Boolean(form.state)"
-              :name="'state'"
-              :listLabel="'acronym'"
-              :label="'Estado'"
-              :list="stateStore.stateList"
-              :selectedVal="form.state"
-              v-model="form.state"
-              :error="errors">
-            </v-select>
-
-            <v-select
-              class="flex-fill"
-              :disabled="Boolean(user?.relationship) && Boolean(form.city)"
-              :name="'city'"
-              :listLabel="'name'"
-              :label="'Cidade'"
-              :list="cityStore.cityList"
-              :reset="cityReset"
-              @onResetDone="cityReset = $event"
-              :selectedVal="form.city"
-              v-model="form.city"
-              :error="errors">
-            </v-select>
-          </div>
-
-          <div class="mb-4">
-            <v-select
-              class="flex-fill"
-              :disabled="Boolean(user?.relationship) && Boolean(form.establishment)"
-              :name="'establishment'"
-              :listLabel="'name'"
-              :label="'Unidade de Saúde'"
-              :list="establishmentStore.establishmentList"
-              :reset="establishmentReset"
-              @onResetDone="establishmentReset = $event"
-              :selectedVal="form.establishment"
-              v-model="form.establishment"
-              :error="errors">
-            </v-select>
-          </div>
-
-          <div class="mb-4">
-            <v-select
-              :disabled="Boolean(user?.relationship) && Boolean(form.cbo)"
-              :name="'cbo'"
-              :listLabel="'name'"
-              :label="'CBO'"
-              :list="cboStore.cboList"
-              :selectedVal="form.cbo"
-              v-model="form.cbo"
-              :error="errors">
-            </v-select>
-          </div>
-
-          <div class="mb-4">
-            <v-input :type="'password'" :label="'Senha'" :name="'password'" v-model="form.password" :error="errors"/>
-          </div>
-
-          <div class="mb-4">
-            <v-input :type="'password'" :label="'Confirma senha'" :name="'password_confirmation'" v-model="form.password_confirmation" :error="errors"/>
-          </div>
-
-          <div class="d-grid mb-0 text-center">
-            <button class="btn btn-primary fw-semibold" type="submit"> Cadastrar </button>
-          </div>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <div class="row mt-3">
-    <div class="col-12 text-center">
-      <p class="text-muted">Já possui uma conta?
-        <router-link :to="{ name: 'auth.login' }" class="text-primary fw-semibold ms-1">Login</router-link>
-      </p>
     </div>
   </div>
 </template>
@@ -246,6 +252,7 @@ async function onSearchCPFDataCNES(inputElement) {
         form.value.name = $lowerCaseName(user.value.nome)
 
         // TODO CPF DE TESTE 00653412100
+        // TODO CASO O USUÁRIO NÃO SEJA ENCONTRADO NÃO DEVE SER MOSTRADO MENSAGEM DE ERRO
         if (user.value.vinculos) {
           user.value.relationship = user.value.vinculos.find((relationship) => relationship.tpSusNaoSus === 'S')
 
@@ -314,7 +321,7 @@ async function onRegisterDone(response) {
     return
   }
 
-  router.push({ name: 'auth.verify-email', replace: true })
+  router.replace({ name: 'auth.verify-email' })
 }
 </script>
 

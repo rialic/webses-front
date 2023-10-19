@@ -5,52 +5,51 @@ import { empty } from '@/helper'
 /* Routes */
 import authRoutes from '@/router/auth'
 import homeRoutes from '@/router/home'
+import errorRoutes from '@/router/error'
 
 export default (() => {
   const $empty = empty
   const router = createRouter({
     history: createWebHistory(),
-    routes: Array.prototype.concat(authRoutes, homeRoutes)
+    routes: Array.prototype.concat(authRoutes, homeRoutes, errorRoutes)
   })
 
   router.beforeEach(async(to, from, next) => {
-    const isAuthRoutes = to.name === 'auth.login' || to.name === 'auth.register' || to.name === 'auth.verify-email'
-
     await attempt()
 
-    if ($empty(to.name) && !verified.value) {
-      next({ name: 'auth.verify-email' })
+    const isAuthRoutes = to.name === 'auth' || to.name === 'auth.login' || to.name === 'auth.register' || to.name === 'auth.verify-email'
+    const isGuardRoutes = to.meta.guard?.length
+    const isErrorRoutes = to.name === 'not-found' || to.name === '404-not-found'
+    const userEmailIsVerified = verified.value
+    const userIsAuthenticated = (authenticated.value && userEmailIsVerified)
 
-      return
-    }
+    if (userIsAuthenticated) {
+      const guards = to.meta.guard
+      const canPass = user.value.abilities.find((ability) => guards?.includes(ability))
 
-    if ($empty(to.name) && (authenticated.value && verified.value)) {
-      next({ name: 'home' })
-
-      return
-    }
-
-    if (isAuthRoutes) {
-      if (!$empty(user.value) && !verified.value && to.name !== 'auth.verify-email') {
-        next({ name: 'auth.verify-email' })
-
-        return
+      if (isAuthRoutes) {
+        return next({ name: 'home' })
       }
 
-      if (authenticated.value && verified.value) {
-        next({ name: 'home' })
+      if (canPass || isErrorRoutes) {
+        return next()
+      }
 
-        return
+      return next({ name: '404-not-found' })
+    }else {
+      if (isGuardRoutes) {
+        return next({ name: 'auth.login' })
+      }
+
+      if (!$empty(user.value) && !userEmailIsVerified && to.name !== 'auth.verify-email') {
+        return next({ name: 'auth.verify-email' })
       }
 
       if ($empty(user.value) && to.name === 'auth.verify-email') {
-        next({ name: 'auth.login' })
-
-        return
+        return next({ name: 'auth.login' })
       }
     }
 
-    // TODO USUÁRIO NÃO AUTENTICADO E NEM VERIFICADO TENTANDO ACESSAR ROTAS VERIFICAÇÃO E AUTENTICAÇÃO
     next()
   })
 

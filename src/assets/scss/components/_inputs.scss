@@ -5,8 +5,7 @@
 
 .form-control:focus,
 .form-select:valid:focus {
-  box-shadow: rgba(0, 0, 0, 0.05) rem(0px) rem(6px) rem(24px) rem(0px),
-    rgba(var(--bs-primary-rgb), 1) rem(0px) rem(0px) rem(0px) rem(1px);
+  box-shadow: rgba(0, 0, 0, 0.05) rem(0px) rem(6px) rem(24px) rem(0px), rgba(var(--bs-primary-rgb), 1) rem(0px) rem(0px) rem(0px) rem(1px);
   border: rem(2px) solid $primary;
 }
 

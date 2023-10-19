@@ -45,22 +45,20 @@ export const {
       const response = await axios.get('api/me')
 
       if (response.status === 403) {
-        const page = window.location.href.slice(window.location.href.lastIndexOf('/') + 1)
         const user = response?.user
 
-        if (user && !user.verified_at && page !== 'verify-email') {
+        if (user && !user?.verified_at) {
           setVerified(false)
           setUser(user)
         }
       }
 
-      // TODO VERIFICAR SE O USUÁRIO FICA AUTENTICADO DEPOIS DO CONFIRMAR EMAIL
-      console.log('authenticated => ', getAuthenticated().value)
       if (response.status === 200) {
-        // setAuthenticated(true)
-        // setVerified(true)
-        // setUser(response.data.data)
-       //  localStorage.setItem('webses_token', response.data.token)
+        const user = response.data
+
+        setAuthenticated(true)
+        setVerified(true)
+        setUser(user)
       }
 
       return response
@@ -75,9 +73,10 @@ export const {
     const response = await axios.post('login', data)
 
     if (response.status === 200) {
+      const user = response.data
+
       setAuthenticated(true)
-      setVerified(true)
-      setUser(response.data.data)
+      setVerified(Boolean(user.verified_at))
     }
 
     return response
