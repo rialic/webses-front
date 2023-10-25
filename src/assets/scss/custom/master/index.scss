@@ -24,13 +24,13 @@
 @import "bootstrap/scss/grid";
 @import "bootstrap/scss/forms";
 @import "bootstrap/scss/buttons";
-@import "bootstrap/scss/nav";
 @import "bootstrap/scss/card";
 @import "bootstrap/scss/close";
 @import "bootstrap/scss/offcanvas";
 @import "bootstrap/scss/spinners";
 @import "bootstrap/scss/toasts";
 @import "bootstrap/scss/dropdown";
+@import "bootstrap/scss/list-group";
 
 /*----------------------------------------------------------------*\
   Helpers
@@ -45,6 +45,8 @@
 @import "../../components/floating-labels";
 @import "../../components/inputs";
 @import "../../components/nprogress";
+@import "../../components/_dropdown";
+@import "../../components/_aside-accordion";
 
 /*----------------------------------------------------------------*\
   Utilities

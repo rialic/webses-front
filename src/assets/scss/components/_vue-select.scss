@@ -1,5 +1,6 @@
 .v-select {
   &.is-invalid {
+    height: rem(38px) !important;
     border: var(--bs-border-width) solid var(--bs-red);
 
     .vs__dropdown-toggle {

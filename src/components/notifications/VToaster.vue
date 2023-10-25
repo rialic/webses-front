@@ -35,7 +35,7 @@ onUpdated(() => {
 
 /* computed */
 const getToaster = computed(() => {
-  const headerMessage = { 'info': 'Info', 'success': 'Sucesso', 'error': 'Ops...' }
+  const headerMessage = { 'info': 'Info', 'success': 'Sucesso', 'error': 'Ops... Erro' }
   const colorNotification = { 'info': 'info', 'success': 'success', 'error': 'danger' }
   const iconNotification = { 'info': ['fas', 'circle-info'], 'success': ['far', 'circle-check'], 'error': ['far', 'circle-xmark'] }
 

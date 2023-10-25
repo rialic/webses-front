@@ -1,14 +1,14 @@
 import { defineStore } from 'pinia'
 import axios from '@/configs/axios'
 
-export const useCityStore = defineStore('cityStore', {
+export const useModuleStore = defineStore('moduleStore', {
   state: () => ({
-    cityList: []
+    moduleList: []
   }),
   actions: {
-    async getCities(filterParams) {
+    async getModules() {
       try {
-        const response = await axios.get('cities', { withCredentials: false, params: filterParams })
+        const response = await axios.get('api/modules')
 
         if (response.status === 200) {
 

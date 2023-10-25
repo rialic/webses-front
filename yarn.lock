@@ -3406,6 +3406,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"vue3-autocounter@npm:^1.0.6":
+  version: 1.0.6
+  resolution: "vue3-autocounter@npm:1.0.6"
+  peerDependencies:
+    vue: ^3.0.5
+  checksum: ad3df84c656aae5299b0e5ecc316dc90351514d7a3ddedb5e8463a53b2ca6efee924f4625b87141d4cba8fd1c5326342c56be44e597816c0decaf1f47a5aa9e2
+  languageName: node
+  linkType: hard
+
 "vue@npm:^3.3.4":
   version: 3.3.4
   resolution: "vue@npm:3.3.4"
@@ -3447,6 +3456,7 @@ __metadata:
     vue: ^3.3.4
     vue-router: 4
     vue-select: beta
+    vue3-autocounter: ^1.0.6
   languageName: unknown
   linkType: soft
 

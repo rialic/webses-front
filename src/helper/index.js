@@ -4,13 +4,18 @@ export const {
   getSubDomain,
   parseFilters,
   trimInput,
-  lowerCaseName
+  lowerCaseName,
+  validCPF
 } = (() => {
   function logo() {
     const mainLogo = new URL(`/src/assets/img/${getSubDomain()}/main-logo.png`, import.meta.url)
+    const navLogo = new URL(`/src/assets/img/${getSubDomain()}/nav-logo.png`, import.meta.url)
+    const asideLogo = new URL(`/src/assets/img/${getSubDomain()}/aside-logo.png`, import.meta.url)
 
     return {
-      mainLogo
+      mainLogo,
+      navLogo,
+      asideLogo
     }
   }
 
@@ -115,12 +120,68 @@ export const {
     return inputTag.target.value
   }
 
+  function validCPF(cpf) {
+    const cpfRegex = /^(?:(\d{3}).(\d{3}).(\d{3})-(\d{2}))$/
+
+    if (!cpfRegex.test(cpf) ||
+      cpf === '000.000.000-00' ||
+      cpf === '111.111.111-11' ||
+      cpf === '222.222.222-22' ||
+      cpf === '333.333.333-33' ||
+      cpf === '444.444.444-44' ||
+      cpf === '555.555.555-55' ||
+      cpf === '666.666.666-66' ||
+      cpf === '777.777.777-77' ||
+      cpf === '888.888.888-88' ||
+      cpf === '999.999.999-99') {
+      return false
+    }
+
+    const numbers = cpf.match(/\d/g).map(Number)
+    let sum = numbers.reduce((acc, cur, index) => {
+      if (index < 9) {
+        return acc + cur * (10 - index)
+      }
+      return acc
+    }, 0)
+
+    let rest = (sum * 10) % 11
+
+    if (rest === 10 || rest === 11) {
+      rest = 0
+    }
+
+    if (rest !== numbers[9]) {
+      return false
+    }
+
+    sum = numbers.reduce((acc, cur, index) => {
+      if (index < 10) {
+        return acc + cur * (11 - index)
+      }
+      return acc
+    }, 0)
+
+    rest = (sum * 10) % 11
+
+    if (rest === 10 || rest === 11) {
+      rest = 0
+    }
+
+    if (rest !== numbers[10]) {
+      return false
+    }
+
+    return true
+  }
+
   return {
     logo,
     empty,
     getSubDomain,
     parseFilters,
     trimInput,
-    lowerCaseName
+    lowerCaseName,
+    validCPF
   }
 })()

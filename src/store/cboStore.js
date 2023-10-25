@@ -7,9 +7,9 @@ export const useCBOStore = defineStore('cboStore', {
   }),
   actions: {
     async getCBO() {
-      const response = await axios.get('cbo')
-
       try {
+        const response = await axios.get('cbo', { withCredentials: false })
+
         if (response.status === 200) {
 
           return response

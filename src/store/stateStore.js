@@ -7,9 +7,9 @@ export const useStateStore = defineStore('stateStore', {
   }),
   actions: {
     async getStates() {
-      const response = await axios.get('states')
-
       try {
+        const response = await axios.get('states', { withCredentials: false })
+
         if (response.status === 200) {
 
           return response

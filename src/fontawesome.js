@@ -8,7 +8,13 @@ import {
 import {
   fas,
   faEnvelope,
-  faCircleInfo
+  faCircleInfo,
+  faUserLarge,
+  faXmark,
+  faBars,
+  faDisplay,
+  faUserNurse,
+  faArrowRightFromBracket
 } from '@fortawesome/free-solid-svg-icons'
 
 import {
@@ -18,6 +24,6 @@ import {
   faCircleXmark,
 } from '@fortawesome/free-regular-svg-icons'
 
-library.add(fas, fab, far, faEnvelope, faCircleInfo, faPaperPlane, faCircleCheck, faCircleXmark)
+library.add(fas, fab, far, faEnvelope, faCircleInfo, faPaperPlane, faCircleCheck, faCircleXmark, faUserLarge, faXmark, faBars, faDisplay, faUserNurse, faArrowRightFromBracket)
 
 export default FontAwesomeIcon

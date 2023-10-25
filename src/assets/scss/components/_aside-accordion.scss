@@ -1,0 +1,87 @@
+.aside-accordion\:tab input {
+  position: absolute;
+  opacity: 0;
+  z-index: -1;
+}
+
+.aside-accordion\:tab-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: all 0.35s;
+  background-color: #ffffff;
+}
+
+.aside-accordion\:tab input:checked ~ .aside-accordion\:tab-content {
+  max-height: 10rem;
+}
+
+.aside-accordion {
+  color: var(--theme);
+  border: 0;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.aside-accordion\:tab-label {
+  display: flex;
+  color: white;
+  background: var(--theme);
+  font-weight: bolder;
+  cursor: pointer;
+  justify-content: space-between;
+  padding: rem(8px);
+
+  &:hover {
+    color: RGBA(var(--bs-light-rgb), var(--bs-link-opacity,.75));
+    -webkit-text-decoration-color: RGBA(var(--bs-light-rgb), var(--bs-link-underline-opacity,0.75));
+    text-decoration-color: RGBA(var(--bs-light-rgb), var(--bs-link-underline-opacity,0.75));
+  }
+}
+
+.aside-accordion\:tab input:checked + .aside-accordion\:tab-label::after {
+  transform: rotate(270deg);
+}
+
+.aside-accordion\:tab input:checked + .aside-accordion\:tab-label:last-child {
+  border-radius: rem(6px);
+  color: $white;
+  background-color: var(--bs-primary);
+}
+
+.aside-accordion\:tab input:checked + .aside-accordion\:tab-label {
+  border-top-right-radius: rem(6px);
+  border-top-left-radius: rem(6px);
+  color: $white;
+  background-color: var(--bs-primary);
+}
+
+.aside-accordion\:tab input:checked ~ .aside-accordion\:tab-content {
+  border-bottom-right-radius: rem(6px);
+  border-bottom-left-radius: rem(6px);
+  background-color: #485057;
+}
+
+.aside-accordion\:tab input:checked ~ .aside-accordion\:tab-content li {
+  font-weight: bolder;
+  color: $white;
+  background-color: #485057;
+
+  &:hover {
+    color: RGBA(var(--bs-light-rgb), var(--bs-link-opacity,.75));
+    -webkit-text-decoration-color: RGBA(var(--bs-light-rgb), var(--bs-link-underline-opacity,0.75));
+    text-decoration-color: RGBA(var(--bs-light-rgb), var(--bs-link-underline-opacity,0.75));
+  }
+}
+
+.aside-accordion\:tab input:not(:checked) + .aside-accordion\:tab-label:hover::after {
+  animation: bounce .5s infinite;
+}
+
+@keyframes bounce {
+  25% {
+    transform: rotate(90deg) translate(.25rem);
+  }
+  75% {
+    transform: rotate(90deg) translate(-.25rem);
+  }
+}

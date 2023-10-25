@@ -7,9 +7,9 @@ export const useEstablishmentStore = defineStore('establishmentStore', {
   }),
   actions: {
     async getEstablishments(filterParams) {
-      const response = await axios.get('establishments', { params: filterParams })
-
       try {
+        const response = await axios.get('establishments', { withCredentials: false, params: filterParams })
+
         if (response.status === 200) {
 
           return response

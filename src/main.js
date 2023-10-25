@@ -10,9 +10,10 @@ import * as bootstrap from 'bootstrap'
 import router from '@/router'
 import { createPinia } from 'pinia'
 import Cleave from 'cleave.js'
+import Vue3Autocounter from 'vue3-autocounter'
 
 /* Helpers */
-import { logo, getSubDomain, empty, parseFilters, trimInput, lowerCaseName } from '@/helper'
+import { logo, getSubDomain, empty, parseFilters, trimInput, lowerCaseName, validCPF } from '@/helper'
 
 /* Components */
 import FontAwesomeIcon from '@/fontawesome'
@@ -27,6 +28,7 @@ app.component('v-toaster', VToaster)
 app.component('v-input', VInput)
 app.component('v-check', VCheck)
 app.component('v-select', VSelect)
+app.component('v-autocounter', Vue3Autocounter)
 
 app.provide('$logo', logo())
 app.provide('$empty', empty)
@@ -34,6 +36,7 @@ app.provide('$getSubDomain', getSubDomain)
 app.provide('$parseFilters', parseFilters)
 app.provide('$trimInput', trimInput)
 app.provide('$lowerCaseName', lowerCaseName)
+app.provide('$validCPF', validCPF)
 
 /* Custom directives */
 app.directive('cleave', (el, binding) => {

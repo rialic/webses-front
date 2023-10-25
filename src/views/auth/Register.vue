@@ -146,13 +146,16 @@ import { useStateStore } from '@/store/stateStore'
 import { useCityStore } from '@/store/cityStore'
 import { useEstablishmentStore } from '@/store/establishmentStore'
 import { useCBOStore } from '@/store/cboStore'
+import { useToasterStore } from '@/store/toasterStore'
 
 const stateStore = useStateStore()
 const cityStore = useCityStore()
 const establishmentStore = useEstablishmentStore()
 const cboStore = useCBOStore()
+const toasterStore = useToasterStore()
 
 /* helper */
+const $validCPF = inject('$validCPF')
 const $empty = inject('$empty')
 const $logo = inject('$logo')
 const $parseFilters = inject('$parseFilters')
@@ -233,13 +236,12 @@ watch(() => form.value.city, async() => {
 
 /* methods */
 async function onSearchCPFDataCNES(inputElement) {
+  const cpfRegex = /^(?:(\d{3}).(\d{3}).(\d{3})-(\d{2}))$/
   let cpf = inputElement.target.value
-  const cpfRegex = /^[0-9]{3}\.[0-9]{3}\.[0-9]{3}-[0-9]{2}$/g
-  const isValidCPF = cpfRegex.test(cpf)
 
-  if (isValidCPF && (cpf !== cpfSearched.value)) {
+  if ($validCPF(cpf) && (cpf !== cpfSearched.value)) {
     showSpinner.value = true
-    const response = await axios.get(`datacnes-user?filter:cpf=${cpf.replaceAll('.', '').replace('-', '')}`)
+    const response = await axios.get(`datacnes-user?filter:cpf=${cpf.replaceAll('.', '').replace('-', '')}`, { withCredentials: false })
 
     showRegisterForm.value = true
     cpfSearched.value = cpf
@@ -252,7 +254,6 @@ async function onSearchCPFDataCNES(inputElement) {
         form.value.name = $lowerCaseName(user.value.nome)
 
         // TODO CPF DE TESTE 00653412100
-        // TODO CASO O USUÁRIO NÃO SEJA ENCONTRADO NÃO DEVE SER MOSTRADO MENSAGEM DE ERRO
         if (user.value.vinculos) {
           user.value.relationship = user.value.vinculos.find((relationship) => relationship.tpSusNaoSus === 'S')
 
@@ -280,11 +281,16 @@ async function onSearchCPFDataCNES(inputElement) {
     return
   }
 
-  if (isValidCPF || (!$empty(cpf) && cpf === cpfSearched.value)) {
+  if ($validCPF(cpf) || (!$empty(cpf) && cpf === cpfSearched.value)) {
     cpfSearched.value = cpf
     showRegisterForm.value = true
 
     return
+  }
+
+  if (cpfRegex.test(cpf)) {
+    toasterStore.setErrorMessage('CPF inválido.')
+    toasterStore.showToaster = true
   }
 
   showRegisterForm.value = false

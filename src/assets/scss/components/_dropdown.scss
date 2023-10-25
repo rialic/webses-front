@@ -1,0 +1,14 @@
+.dropdown-toggle {
+  &.dropdown-toggle--no-arrow::after {
+    display: none;
+  }
+}
+
+.dropdown-item {
+  color: var(--bs-secondary-color);
+
+  &:hover, &:focus {
+    color: $white;
+    background-color: $primary;
+  }
+}
