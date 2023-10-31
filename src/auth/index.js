@@ -94,7 +94,6 @@ export const {
       if (response.status === 200 || response.status === 204) {
         setAuthenticated(false)
         setUser({})
-        console.log('here')
         router.push({ name: 'auth', replace: true })
       }
     } catch (exception) {

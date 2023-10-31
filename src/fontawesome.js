@@ -14,7 +14,13 @@ import {
   faBars,
   faDisplay,
   faUserNurse,
-  faArrowRightFromBracket
+  faArrowRightFromBracket,
+  faMagnifyingGlass,
+  faChartLine,
+  faLaptopMedical,
+  faGear,
+  faArrowsRotate,
+  faFilter,
 } from '@fortawesome/free-solid-svg-icons'
 
 import {
@@ -22,8 +28,35 @@ import {
   faPaperPlane,
   faCircleCheck,
   faCircleXmark,
+  faCalendarDays,
+  faCircleRight,
+  faPenToSquare
 } from '@fortawesome/free-regular-svg-icons'
 
-library.add(fas, fab, far, faEnvelope, faCircleInfo, faPaperPlane, faCircleCheck, faCircleXmark, faUserLarge, faXmark, faBars, faDisplay, faUserNurse, faArrowRightFromBracket)
+library.add(
+  fas,
+  fab,
+  far,
+  faEnvelope,
+  faCircleInfo,
+  faPaperPlane,
+  faCircleCheck,
+  faCircleXmark,
+  faUserLarge,
+  faXmark,
+  faBars,
+  faDisplay,
+  faUserNurse,
+  faArrowRightFromBracket,
+  faCalendarDays,
+  faCircleRight,
+  faMagnifyingGlass,
+  faChartLine,
+  faLaptopMedical,
+  faGear,
+  faArrowsRotate,
+  faFilter,
+  faPenToSquare,
+)
 
 export default FontAwesomeIcon

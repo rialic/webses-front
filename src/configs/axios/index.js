@@ -43,11 +43,12 @@ export default (() => {
 
       NProgress.done()
 
-      if (!response.data?.data) {
-        return { data: response.data?.data || response.data , status: response.status }
+      return {
+        status: response.status,
+        data: response.data?.data || response.data,
+        links: response.data?.links,
+        meta: response.data?.meta,
       }
-
-      return { data: Array.isArray(response.data?.data) ? [...response.data.data] : response.data.data , status: response.status }
     },
     function({ response, message }) {
       if (response.status === 422 || response.status === 400) {

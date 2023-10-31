@@ -13,7 +13,7 @@ import Cleave from 'cleave.js'
 import Vue3Autocounter from 'vue3-autocounter'
 
 /* Helpers */
-import { logo, getSubDomain, empty, parseFilters, trimInput, lowerCaseName, validCPF } from '@/helper'
+import { logo, getSubDomain, empty, parseFilters, parseQueryStringToObject, trimInput, lowerCaseName, validCPF } from '@/helper'
 
 /* Components */
 import FontAwesomeIcon from '@/fontawesome'
@@ -21,6 +21,9 @@ import VToaster from '@/components/notifications/VToaster.vue'
 import VInput from '@/components/forms/VInput.vue'
 import VCheck from '@/components/forms/VCheck.vue'
 import VSelect from '@/components/forms/VSelect.vue'
+import Can from '@/components/guards/Can.vue'
+import DefaultContainer from '@/components/containers/DefaultContainer.vue'
+import VActionButton from '@/components/buttons/VActionButton.vue'
 
 /* Custom components */
 app.component('fa', FontAwesomeIcon)
@@ -28,15 +31,20 @@ app.component('v-toaster', VToaster)
 app.component('v-input', VInput)
 app.component('v-check', VCheck)
 app.component('v-select', VSelect)
+app.component('v-can', Can)
 app.component('v-autocounter', Vue3Autocounter)
+app.component('default-container', DefaultContainer)
+app.component('v-action-button', VActionButton)
 
 app.provide('$logo', logo())
 app.provide('$empty', empty)
 app.provide('$getSubDomain', getSubDomain)
 app.provide('$parseFilters', parseFilters)
+app.provide('$parseQueryStringToObject', parseQueryStringToObject)
 app.provide('$trimInput', trimInput)
 app.provide('$lowerCaseName', lowerCaseName)
 app.provide('$validCPF', validCPF)
+app.provide('bootstrap', bootstrap)
 
 /* Custom directives */
 app.directive('cleave', (el, binding) => {

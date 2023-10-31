@@ -21,7 +21,7 @@
           </button>
 
           <ul class="dropdown-menu text-small shadow" style="">
-            <li><a class="dropdown-item fw-semibold fs-14" href="#">Conta</a></li>
+            <li><a class="dropdown-item fw-semibold fs-14" href="#">Minha Conta</a></li>
             <li>
               <hr class="dropdown-divider">
             </li>

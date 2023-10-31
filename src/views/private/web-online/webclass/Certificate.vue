@@ -1,5 +1,5 @@
 <template>
-  <div></div>
+  <div>certificate</div>
 </template>
 
 <script setup>

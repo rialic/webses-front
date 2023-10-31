@@ -3,9 +3,11 @@ export const {
   empty,
   getSubDomain,
   parseFilters,
+  parseQueryStringToObject,
   trimInput,
   lowerCaseName,
-  validCPF
+  validCPF,
+  pageParams
 } = (() => {
   function logo() {
     const mainLogo = new URL(`/src/assets/img/${getSubDomain()}/main-logo.png`, import.meta.url)
@@ -74,13 +76,30 @@ export const {
 
     return filters.reduce((acc, filterKey) => {
       const isFilterExists = !empty(filterParams[filterKey])
+      const isValidFilterKey = filterKey !== 'page' && filterKey !== 'limit' && filterKey !== 'orderBy' && filterKey !== 'direction'
 
-      if (isFilterExists) {
+      if (isFilterExists && isValidFilterKey) {
         acc[`filter:${filterKey}`] = filterParams[filterKey]
+      }
+
+      if (isFilterExists && !isValidFilterKey) {
+        acc[`${filterKey}`] = filterParams[filterKey]
       }
 
       return acc
     }, {})
+  }
+
+  function parseQueryStringToObject(url) {
+    const result = {}
+    const urlParams = new URLSearchParams(url.slice(url.indexOf('?') + 1))
+    const entries = urlParams.entries()
+
+    for(const [key, value] of entries) {
+      result[key] = value
+    }
+
+    return result
   }
 
   function lowerCaseName(val) {
@@ -175,13 +194,24 @@ export const {
     return true
   }
 
+  function pageParams(route, pageName = null) {
+    if (route.params.uuid) {
+      return { uuid : route.params.uuid }
+    }
+
+    route.query.pageName = pageName
+    return { page: parseInt(route.query.page) || 1, limit: 20 }
+  }
+
   return {
     logo,
     empty,
     getSubDomain,
     parseFilters,
+    parseQueryStringToObject,
     trimInput,
     lowerCaseName,
-    validCPF
+    validCPF,
+    pageParams
   }
 })()

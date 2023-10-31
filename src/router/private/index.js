@@ -1,3 +1,6 @@
+import consultancy from '@/router/private/consultancy'
+import webOnline from '@/router/private/web-online'
+
 export default [
   {
     path: '',
@@ -11,18 +14,14 @@ export default [
         component: () => import('@/views/private/home/Dashboard.vue'),
         meta: { guard: ['ADMIN', 'HOME'], module: 'dashboard' }
       },
+      webOnline,
+      consultancy,
       {
-        path: '/web',
-        name: 'web',
+        path: '/configuracoes',
+        name: 'setting',
         component: () => import('@/views/private/home/Dashboard.vue'),
-        meta: { guard: ['ADMIN', 'WEB.MENU'], module: 'web online' }
-      },
-      {
-        path: '/teleconsultoria',
-        name: 'consultoria',
-        component: () => import('@/views/private/teleconsultoria/Teleconsultoria.vue'),
-        meta: { guard: ['ADMIN', 'WEB.MENU'], module: 'teleconsultoria' }
-      },
+        meta: { guard: ['ADMIN', 'SETTING'], module: 'configurações' }
+      }
     ]
   }
 ]

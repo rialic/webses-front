@@ -241,7 +241,7 @@ async function onSearchCPFDataCNES(inputElement) {
 
   if ($validCPF(cpf) && (cpf !== cpfSearched.value)) {
     showSpinner.value = true
-    const response = await axios.get(`datacnes-user?filter:cpf=${cpf.replaceAll('.', '').replace('-', '')}`, { withCredentials: false })
+    const response = await axios.get(`datacnes-user?filter:cpf=${cpf.replaceAll('.', '').replace('-', '')}`)
 
     showRegisterForm.value = true
     cpfSearched.value = cpf

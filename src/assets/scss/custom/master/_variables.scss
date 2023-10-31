@@ -12,7 +12,7 @@ $font-family-sans-serif: "Montserrat", sans-serif;
 // https://coolors.co/a1a1e2-f794bd-f47d7d-50b9d8-00a8a8-ffe007-6080b2-c07c98-93c497-eb955e
 
 $white: #ffffff;
-$blue: #6080b2 !default;
+$blue: #0d6efd !default;
 $indigo: #6610f2 !default;
 $purple: #a1a1e2 !default;
 $pink: #f794bd !default;
@@ -48,11 +48,24 @@ $extra-colors: (
   "purple": $purple,
   "pink": $pink,
   "dark": $dark,
+  "blue": $blue,
 );
 
 $theme-colors: map-merge($theme-colors, $extra-colors);
 
+$table-bg-scale: -80%;
 $body-bg: #f3f4f6;
 $input-bg: $white;
 $card-bg: $white;
 $enable-dark-mode: false;
+
+$table-variants: (
+  "secondary": shift-color($secondary, $table-bg-scale),
+  "success": shift-color($success, $table-bg-scale),
+  "info": shift-color($info, $table-bg-scale),
+  "warning": shift-color($warning, $table-bg-scale),
+  "danger": shift-color($danger, $table-bg-scale),
+  "white": shift-color($white, $table-bg-scale),
+  "light": shift-color($light, $table-bg-scale),
+  "dark": $dark,
+);

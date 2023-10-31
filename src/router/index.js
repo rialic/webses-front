@@ -4,14 +4,14 @@ import { empty } from '@/helper'
 
 /* Routes */
 import authRoutes from '@/router/auth'
-import privRoutes from '@/router/priv'
+import privateRoutes from '@/router/private'
 import errorRoutes from '@/router/error'
 
 export default (() => {
   const $empty = empty
   const router = createRouter({
     history: createWebHistory(),
-    routes: Array.prototype.concat(authRoutes, privRoutes, errorRoutes)
+    routes: Array.prototype.concat(authRoutes, privateRoutes, errorRoutes)
   })
 
   router.beforeEach(async(to, from, next) => {

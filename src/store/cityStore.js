@@ -8,7 +8,7 @@ export const useCityStore = defineStore('cityStore', {
   actions: {
     async getCities(filterParams) {
       try {
-        const response = await axios.get('cities', { withCredentials: false, params: filterParams })
+        const response = await axios.get('cities', { params: filterParams })
 
         if (response.status === 200) {
 
