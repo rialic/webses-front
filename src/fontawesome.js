@@ -21,6 +21,7 @@ import {
   faGear,
   faArrowsRotate,
   faFilter,
+  faBroom
 } from '@fortawesome/free-solid-svg-icons'
 
 import {
@@ -57,6 +58,7 @@ library.add(
   faArrowsRotate,
   faFilter,
   faPenToSquare,
+  faBroom
 )
 
 export default FontAwesomeIcon

@@ -43,12 +43,7 @@ export default (() => {
 
       NProgress.done()
 
-      return {
-        status: response.status,
-        data: response.data?.data || response.data,
-        links: response.data?.links,
-        meta: response.data?.meta,
-      }
+      return { status: response.status, data: response.data?.data || response.data, links: response.data?.links, meta: response.data?.meta }
     },
     function({ response, message }) {
       if (response.status === 422 || response.status === 400) {
@@ -68,7 +63,7 @@ export default (() => {
       }
 
       NProgress.done()
-      return { ...response.data, status: response.status, message }
+      return { data: response.data, status: response.status, message: message || response?.data?.message }
     })
 
     return instance

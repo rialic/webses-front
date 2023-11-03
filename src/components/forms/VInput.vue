@@ -18,21 +18,45 @@
   </div>
 
   <div v-else class="form-floating">
-    <input
-      :disabled="disabled"
-      :id="name"
-      :type="type"
-      :class="[!$empty(error?.[name]) ? 'is-invalid' : '', 'form-control']"
-      :value="modelValue"
-      @blur.prevent="$emit('update:modelValue', $event.target.value.trim())"
-      @input.prevent="$emit('update:modelValue', $trimInput($event))"
-      placeholder=" ">
+    <template v-if="inputGroupText">
+      <div class="input-group has-validation">
+        <input
+          :disabled="disabled"
+          :id="name"
+          :type="type"
+          :class="[!$empty(error?.[name]) ? 'is-invalid' : '', 'form-control']"
+          :value="modelValue"
+          @blur.prevent="$emit('update:modelValue', $event.target.value.trim())"
+          @input.prevent="$emit('update:modelValue', $trimInput($event))"
+          placeholder=" ">
 
-    <label for="{{ name }}" class="form-label">{{ label }}</label>
+          <label for="{{ name }}" class="form-label z-index-4">{{ label }}</label>
 
-    <span v-if="!$empty(error?.[name])" class="invalid-feedback m-0 fs-13 fw-semibold">
-      {{ error[name][0] }}
-    </span>
+          <span class="input-group-text">{{ inputGroupText }}</span>
+
+          <div v-if="!$empty(error?.[name])" class="invalid-feedback m-0 fs-13 fw-semibold">
+            {{ error[name][0] }}
+          </div>
+      </div>
+    </template>
+
+    <template v-else>
+      <input
+        :disabled="disabled"
+        :id="name"
+        :type="type"
+        :class="[!$empty(error?.[name]) ? 'is-invalid' : '', 'form-control']"
+        :value="modelValue"
+        @blur.prevent="$emit('update:modelValue', $event.target.value.trim())"
+        @input.prevent="$emit('update:modelValue', $trimInput($event))"
+        placeholder=" ">
+
+      <label for="{{ name }}" class="form-label">{{ label }}</label>
+
+      <span v-if="!$empty(error?.[name])" class="invalid-feedback m-0 fs-13 fw-semibold">
+        {{ error[name][0] }}
+      </span>
+    </template>
   </div>
 </template>
 
@@ -63,9 +87,14 @@ defineProps({
     default: 'text'
   },
   modelValue: {
-    required: true
+    type: [String, Number, null],
+    default: null
   },
   mask: {
+    type: String,
+    default: null
+  },
+  inputGroupText: {
     type: String,
     default: null
   },

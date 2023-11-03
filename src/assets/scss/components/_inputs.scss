@@ -1,6 +1,10 @@
 .form-control,
 .form-select {
   border-width: rem(2px);
+
+  &:hover {
+    border-color: #aaaeb7;
+  }
 }
 
 .form-control:focus,

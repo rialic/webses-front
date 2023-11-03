@@ -1,5 +1,5 @@
 <template>
-  <div id="deleteModal" class="modal fade" tabindex="-1">
+  <div id="deleteModal" class="modal fade" data-bs-backdrop="static" tabindex="-1">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
@@ -54,13 +54,9 @@ watch(() => props.show, (value) => {
   deleteModal.value.hide()
 })
 
-const {
-  deleteModal,
-} = (() => {
-  return {
-    deleteModal: ref()
-  }
-})()
+const { deleteModal } = {
+  deleteModal: ref()
+}
 </script>
 
 <style></style>

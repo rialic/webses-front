@@ -5,12 +5,17 @@
     </template>
 
     <template #actions>
-      <v-action-button :routerName="'webclass'">Web aulas</v-action-button>
-      <v-action-button :routerName="'webclass.certificate'">Certificados</v-action-button>
+      <v-can :pass="['WEB.EVENT--VIEW', 'ADMIN']">
+        <v-action-button :routerName="'webclass'">Web aulas</v-action-button>
+      </v-can>
 
-      <button type="button" class="btn btn-outline-blue opacity-75 fw-semibold" @click="onReloadList">
-        <fa :icon="['fas', 'fa-arrows-rotate']" />
-      </button>
+      <v-action-button :routerName="'webclass.certificate'">Certificados</v-action-button>
+    </template>
+
+    <template #addons>
+      <v-addon-button @click="getData">
+        <fa :icon="['fas', 'fa-arrows-rotate']" :size="'sm'"/>
+      </v-addon-button>
     </template>
 
     <template #content>
@@ -98,21 +103,15 @@ const $parseFilters = inject('$parseFilters')
 const bootstrap = inject('bootstrap')
 
 onMounted(async() => {
-  const filterParams = $parseFilters({ 'events_availables': new Date() })
-  eventStore.eventList = (await eventStore.getEvents(filterParams)).data
+  getData()
   redirectModal.value = new bootstrap.Modal('#redirectModal', {})
 })
 
 /* datas */
-const {
-  redirectModal,
-  redirectModalCountdown
-} = (() => {
-  return {
-    redirectModal: ref(),
-    redirectModalCountdown: ref(3)
-  }
-})()
+const { redirectModal, redirectModalCountdown } =  {
+  redirectModal: ref(),
+  redirectModalCountdown: ref(3)
+}
 
 /* methods */
 async function onSaveEventParticipant(event) {
@@ -134,7 +133,7 @@ async function onSaveEventParticipant(event) {
   }, 1000)
 }
 
-async function onReloadList() {
+async function getData() {
   const filterParams = $parseFilters({ 'events_availables': new Date() })
   eventStore.eventList = (await eventStore.getEvents(filterParams)).data
 }

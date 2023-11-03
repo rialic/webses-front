@@ -3,8 +3,6 @@ import axios from '@/configs/axios'
 import { useRoute } from 'vue-router'
 import { computed } from 'vue'
 
-const route = computed(() => useRoute())
-
 export const useEventStore = defineStore('eventStore', {
   state: () => ({
     eventList: [],
@@ -21,6 +19,9 @@ export const useEventStore = defineStore('eventStore', {
       } catch (error) {
         //
       }
+    },
+    async storeEvents(filterParams) {
+      return await axios.post('api/events', filterParams)
     },
     async deleteEvent(uuid) {
       try {

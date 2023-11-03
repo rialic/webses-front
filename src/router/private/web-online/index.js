@@ -1,4 +1,4 @@
-import { pageParams } from '@/helper'
+import { pageParams } from '@/router/helper'
 
 export default {
   path: '',
@@ -15,18 +15,26 @@ export default {
           path: '/web-aulas',
           name: 'webclass',
           component: () => import('@/views/private/web-online/webclass/WebclassList.vue'),
-          props: (route) => pageParams(route, 'webclass')
+          props: (route) => pageParams(route),
+          meta: { guard: ['ADMIN', 'WEB.EVENT--VIEW'], pagRouteName: 'webclass' }
+        },
+        {
+          path: '/web-aulas/criar',
+          name: 'webclass.create',
+          component: () => import('@/views/private/web-online/webclass/WebclassCreate.vue'),
+          meta: { guard: ['ADMIN', 'WEB.EVENT--CREATE'] }
         },
         {
           path: '/web-aulas/:uuid/editar',
           name: 'webclass.edit',
           component: () => import('@/views/private/web-online/webclass/WebclassEdit.vue'),
-          props: (route) => pageParams(route)
+          props: (route) => pageParams(route),
+          meta: { guard: ['ADMIN', 'WEB.EVENT--EDIT'] }
         },
         {
           path: 'participe',
           name: 'webclass.participate',
-          component: () => import('@/views/private/web-online/webclass/EventAvailableList.vue'),
+          component: () => import('@/views/private/web-online/webclass/Participate.vue'),
         },
         {
           path: 'certificados',

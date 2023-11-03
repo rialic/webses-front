@@ -2,7 +2,7 @@
   <div class="container-fluid h-100">
     <div class="row align-items-center justify-content-center h-100">
       <div class="col-md-8 col-lg-6 col-xl-3">
-        <div class="card">
+        <div class="card shadow-sm">
           <div class="card-body p-4">
             <div class="text-center w-100 m-auto">
               <div class="d-flex justify-content-center">
@@ -86,11 +86,11 @@ const {
 
 /* methods */
 async function onLoginDone(response) {
-  const status = (await response).status
+  const { data, status} = await response
 
   if (status === 422) {
     errors.value = null
-    errors.value = (await response).errors
+    errors.value = data.errors
 
     return
   }

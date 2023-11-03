@@ -5,7 +5,7 @@
     <div class="content">
       <aside-menu :showAsideMenu="showAsideMenu" @showMenu="showAsideMenu = $event" data-menu="aside-menu"></aside-menu>
 
-      <div class="main container my-3">
+      <div class="main container-fluid container-xl my-3">
         <router-view></router-view>
       </div>
     </div>

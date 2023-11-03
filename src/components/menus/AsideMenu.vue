@@ -20,7 +20,10 @@
           <div class="aside-accordion:tab">
             <input type="radio" ref="menus" name="aside-accordion" :id="module.name.toLowerCase()" @click.stop="goToNavigation(module)">
 
-            <label @mouseenter="toggleAnimation" @mouseleave="toggleAnimation" :for="module.name.toLowerCase()" class="d-flex justify-content-start column-gap-2 align-items-center aside-accordion:tab-label">
+            <label :for="module.name.toLowerCase()"
+              @mouseenter="toggleAnimation"
+              @mouseleave="toggleAnimation"
+              class="d-flex justify-content-start column-gap-2 align-items-center aside-accordion:tab-label">
               <fa :icon="['fas', getIconModule[module.name.toLowerCase()]]" :size="'sm'"/>
               <div>{{ module.name }}</div>
             </label>
@@ -28,7 +31,7 @@
             <div v-if="module.submodules.length" class="aside-accordion:tab-content">
               <ul class="list-group list-group-flush">
                 <template v-for="(submodule, subIndex) in module.submodules" :key="subIndex">
-                  <v-can :pass="getGuardSubmoduleNavigation[subIndex][submodule.name.toLowerCase()]">
+                  <v-can :pass="getGuardSubmoduleNavigation[submodule.name.toLowerCase()]">
                     <li class="list-group-item border-0 cursor-pointer" @click.stop="goToNavigation(module, submodule)">
                       {{ submodule.name }}
                     </li>
@@ -125,8 +128,9 @@ const getGuardModuleNavigation = computed(() => {
 
 const getGuardSubmoduleNavigation = computed(() => {
   return routeList.value
-    .reduce((acc, route) => (route.children) ? [...route.children] : acc, [])
-    .map((route) => ({ [`${route.meta.submodule}`]: [...route.meta.guard] }))
+    .filter((route) => route.children)
+    .flatMap((route) => route.children)
+    .reduce((acc, route) => ({ ...acc, [`${route.meta.submodule}`]: route.meta.guard }), {})
 })
 
 /* datas */

@@ -6,8 +6,7 @@ export const {
   parseQueryStringToObject,
   trimInput,
   lowerCaseName,
-  validCPF,
-  pageParams
+  validCPF
 } = (() => {
   function logo() {
     const mainLogo = new URL(`/src/assets/img/${getSubDomain()}/main-logo.png`, import.meta.url)
@@ -73,6 +72,7 @@ export const {
 
   function parseFilters(filterParams) {
     const filters = Object.keys(filterParams)
+
 
     return filters.reduce((acc, filterKey) => {
       const isFilterExists = !empty(filterParams[filterKey])
@@ -194,15 +194,6 @@ export const {
     return true
   }
 
-  function pageParams(route, pageName = null) {
-    if (route.params.uuid) {
-      return { uuid : route.params.uuid }
-    }
-
-    route.query.pageName = pageName
-    return { page: parseInt(route.query.page) || 1, limit: 20 }
-  }
-
   return {
     logo,
     empty,
@@ -211,7 +202,6 @@ export const {
     parseQueryStringToObject,
     trimInput,
     lowerCaseName,
-    validCPF,
-    pageParams
+    validCPF
   }
 })()

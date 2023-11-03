@@ -16,7 +16,7 @@
 
 .form-control,
 .form-control-plaintext {
-  padding: rem(6px) rem(12px);
+  padding: rem(6px) rem(12px) !important;
 
   ~ label {
     display: flex;
@@ -53,6 +53,35 @@
   }
 }
 
+.form-vdatepicker {
+  border-radius: rem(6px);
+  border-width: rem(2px);
+
+  &:focus {
+    box-shadow: rgba(0, 0, 0, 0.05) rem(0px) rem(6px) rem(24px) rem(0px), rgba(var(--bs-primary-rgb), 1) rem(0px) rem(0px) rem(0px) rem(1px);
+    border: rem(2px) solid $primary;
+  }
+
+  &.dp__input_focus {
+    box-shadow: rgba(0, 0, 0, 0.05) rem(0px) rem(6px) rem(24px) rem(0px), rgba(var(--bs-primary-rgb), 1) rem(0px) rem(0px) rem(0px) rem(1px);
+    border: rem(2px) solid $primary;
+  }
+
+  &.dp__input_invalid {
+    box-shadow: unset;
+    border-color: var(--bs-danger);
+  }
+
+  &::placeholder {
+    color: var(--bs-body-color);
+    opacity: unset;
+  }
+
+  + div .dp__input_icon {
+    color: var(--bs-body-color);
+  }
+}
+
 .form-floating {
   .form-control,
   .form-control-plaintext,
@@ -64,7 +93,7 @@
 
   .form-control,
   .form-control-plaintext {
-    min-height: unset;
+    min-height: rem(40px);
 
     &:focus,
     &:not(:placeholder-shown) {
@@ -87,7 +116,7 @@
   .form-vselect,
   .form-vselect-plaintext {
     height: 100%;
-    min-height: rem(38px);
+    min-height: rem(40px);
 
     &:focus,
     &:not(:placeholder-shown) {
@@ -113,5 +142,14 @@
       height: inherit;
       line-height: var(--vs-line-height);
     }
+  }
+
+  .form-label.form-label-datepicker {
+    width: 100%;
+    padding: rem(6px) rem(12px);
+    color: var(--bs-body-color-rgb);
+    opacity: 0.85;
+    transform: scale(0.75) translateY(-80%);
+    -moz-transform: scale(0.75) translateY(-80%);
   }
 }

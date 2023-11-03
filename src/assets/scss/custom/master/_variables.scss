@@ -49,6 +49,7 @@ $extra-colors: (
   "pink": $pink,
   "dark": $dark,
   "blue": $blue,
+  "white": $white,
 );
 
 $theme-colors: map-merge($theme-colors, $extra-colors);

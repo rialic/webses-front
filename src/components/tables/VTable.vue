@@ -1,5 +1,5 @@
 <template>
-  <div class="card shadow-sm">
+  <div v-if="props.list.data?.length" class="card shadow-sm">
     <div class="card-body">
       <div class="card-title mb-3">
         <div v-if="props.list.meta?.links?.length" class="fs-22 fw-semibold text-muted m-0">
@@ -24,7 +24,15 @@
               </td>
               <td>
                 <div class="d-flex column-gap-2 justify-content-center">
-                  <button type="button" class="btn btn-sm btn-success px-2" @click="emit('onEdit', item.uuid)">
+                  <template v-if="editGuard">
+                    <v-can :pass="editGuard">
+                      <button type="button" class="btn btn-sm btn-success px-2" @click="emit('onEdit', item.uuid)">
+                        <fa :icon="['far', 'fa-pen-to-square']" :size="'lg'" />
+                      </button>
+                    </v-can>
+                  </template>
+
+                  <button v-else type="button" class="btn btn-sm btn-success px-2" @click="emit('onEdit', item.uuid)">
                     <fa :icon="['far', 'fa-pen-to-square']" :size="'lg'" />
                   </button>
 
@@ -42,8 +50,7 @@
         <ul class="pagination mt-3 mb-0">
           <template v-for="(link, index) in getLinks" :key="index">
             <li class="page-item" :class="{ 'page-item--active': link.active }">
-              <div class="page-link fw-semibold cursor-pointer opacity-75" :class="{ 'active': link.active }"
-                @click="goToPageNavigation(link.url)">
+              <div class="page-link fw-semibold cursor-pointer opacity-75" :class="{ 'active': link.active }" @click="goToPageNavigation(link.url)">
                 <span v-if="index === 0" aria-hidden="true">
                   &laquo;
                 </span>
@@ -60,6 +67,14 @@
           </template>
         </ul>
       </nav>
+    </div>
+  </div>
+
+  <div v-else>
+    <div class="card align-items-center shadow-sm">
+      <fa class="text-muted my-3" :icon="['fas', 'fa-magnifying-glass']" :size="'6x'" />
+
+      <h5 class="mb-2 fw-semibold opacity-75">Nenhum registro foi encontrado.</h5>
     </div>
   </div>
 
@@ -94,6 +109,10 @@ const props = defineProps({
     type: String,
     required: true
   },
+  filterParams: {
+    type: Object,
+    default: () => {}
+  },
   list: {
     type: Object,
     required: true
@@ -101,6 +120,14 @@ const props = defineProps({
   tableColumns: {
     type: Array,
     required: true
+  },
+  editGuard: {
+    type: [String, Array],
+    default: null
+  },
+  deleteGuard: {
+    type: [String, Array],
+    default: null
   },
   messageOnDelete: {
     type: String,
@@ -130,9 +157,9 @@ const { uuidDraftDelete, showDeleteModal } = {
 
 /* methods */
 async function goToPageNavigation(params) {
-  const query = $parseFilters($parseQueryStringToObject(params))
+  const query = Object.assign(props.filterParams, $parseFilters($parseQueryStringToObject(params)))
 
-  router.push({ name: route.query.pageName, query })
+  router.push({ name: route.meta.pagRouteName, query })
 }
 
 function onDelete() {

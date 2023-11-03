@@ -1,4 +1,4 @@
-import { reactive, computed, ref } from 'vue'
+import { reactive, computed } from 'vue'
 import axios from '@/configs/axios'
 import router from '@/router'
 export const {
@@ -50,6 +50,7 @@ export const {
         if (user && !user?.verified_at) {
           setVerified(false)
           setUser(user)
+          sessionStorage.setItem('user', JSON.stringify(user))
         }
       }
 
@@ -59,12 +60,14 @@ export const {
         setAuthenticated(true)
         setVerified(true)
         setUser(user)
+        sessionStorage.setItem('user', JSON.stringify(user))
       }
 
       return response
     } catch (exception) {
       setAuthenticated(false)
       setUser({})
+      sessionStorage.removeItem('user')
     }
   }
 
@@ -94,6 +97,7 @@ export const {
       if (response.status === 200 || response.status === 204) {
         setAuthenticated(false)
         setUser({})
+        sessionStorage.removeItem('user')
         router.push({ name: 'auth', replace: true })
       }
     } catch (exception) {

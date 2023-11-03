@@ -318,11 +318,11 @@ function clearFields() {
 }
 
 async function onRegisterDone(response) {
-  const status = (await response).status
+  const { data, status } = await response
 
   if (status === 422) {
     errors.value = null
-    errors.value = (await response).errors
+    errors.value = data.errors
 
     return
   }

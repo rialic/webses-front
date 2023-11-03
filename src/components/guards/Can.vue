@@ -21,7 +21,13 @@ const props = defineProps({
 
 const canPass = computed(() => {
   if (!$empty(props.pass)) {
-    return !! user.value.abilities.find((ability) => props.pass.includes(ability))
+    return !! user.value.abilities.find((ability) => {
+      if (typeof props.pass === 'string') {
+        return props.pass === ability
+      }
+
+      return props.pass.includes(ability)
+    })
   }
 
   return false

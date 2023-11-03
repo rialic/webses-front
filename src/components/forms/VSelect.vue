@@ -11,6 +11,18 @@
       :options="list"
       v-model="selected">
 
+      <!-- // TODO CORRIGIR V-SELECT PARA O MODELO ABAIXO -->
+    <!-- <vselect
+      :name="name"
+      :disabled="disabled"
+      :label="listLabel"
+      placeholder=" "
+      :class="[!$empty(error?.[name]) ? 'is-invalid' : '', 'form-vselect', {'vs--selected' : selected}]"
+      :value="modelValue"
+      :reduce="list => list?.uuid || list.code"
+      :options="list"
+      v-model="selected"> -->
+
       <template #no-options>Nenhum resultado encontrado.</template>
     </vselect>
 
@@ -86,6 +98,7 @@ const props = defineProps({
 })
 
 /* watch */
+// TODO REMOVER ESSE WATCH AO CORRIGIR O V-SELECR ACIMA
 watch(() => props.selectedVal, () => {
   selected.value = props.selectedVal
 })

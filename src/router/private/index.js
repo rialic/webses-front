@@ -20,7 +20,27 @@ export default [
         path: '/configuracoes',
         name: 'setting',
         component: () => import('@/views/private/home/Dashboard.vue'),
-        meta: { guard: ['ADMIN', 'SETTING'], module: 'configurações' }
+        meta: { guard: ['ADMIN', 'SETTING'], module: 'configurações' },
+        children: [
+          {
+            path: '/usuários',
+            name: 'setting.user',
+            component: () => import('@/views/private/home/Dashboard.vue'),
+            meta: { guard: ['ADMIN'], submodule: 'usuários' }
+          },
+          {
+            path: '/papeis',
+            name: 'setting.roles',
+            component: () => import('@/views/private/home/Dashboard.vue'),
+            meta: { guard: ['ADMIN'], submodule: 'papéis' }
+          },
+          {
+            path: '/permissoes',
+            name: 'setting.permissions',
+            component: () => import('@/views/private/home/Dashboard.vue'),
+            meta: { guard: ['ADMIN'], submodule: 'permissões' }
+          },
+        ]
       }
     ]
   }

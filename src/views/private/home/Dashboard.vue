@@ -45,6 +45,7 @@
 </template>
 
 <script setup>
+// TODO COLORIR OS COUNTERS CARD IDEIA => https://vuejsprojects.com/x-chart
 </script>
 
 <style></style>

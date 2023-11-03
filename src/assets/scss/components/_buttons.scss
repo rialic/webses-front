@@ -22,15 +22,15 @@
   color: #fff;
 }
 
-.btn-primary:hover, .btn.bg-gradient-primary:hover,
-.btn-secondary:hover, .btn.bg-gradient-secondary:hover,
-.btn-success:hover, .btn.bg-gradient-success:hover,
-.btn-info:hover, .btn.bg-gradient-info:hover,
-.btn-danger:hover, .btn.bg-gradient-danger:hover,
-.btn-pink:hover, .btn.bg-gradient-pink:hover,
-.btn-purple:hover, .btn.bg-gradient-purple:hover,
-.btn-teal:hover, .btn.bg-gradient-teal:hover,
-.btn-orange:hover, .btn.bg-gradient-orange:hover {
+.btn-primary:hover, .btn.bg-gradient-primary:hover, .btn-outline-primary:hover,
+.btn-secondary:hover, .btn.bg-gradient-secondary:hover, .btn-outline-secondary:hover,
+.btn-success:hover, .btn.bg-gradient-success:hover, .btn-outline-success:hover,
+.btn-info:hover, .btn.bg-gradient-info:hover, .btn-outline-info:hover,
+.btn-danger:hover, .btn.bg-gradient-danger:hover, .btn-outline-danger:hover,
+.btn-pink:hover, .btn.bg-gradient-pink:hover, .btn-outline-pink:hover,
+.btn-purple:hover, .btn.bg-gradient-purple:hover, .btn-outline-purple:hover,
+.btn-teal:hover, .btn.bg-gradient-teal:hover, .btn-outline-teal:hover,
+.btn-orange:hover, .btn.bg-gradient-orange:hover, .btn-outline-orange:hover {
   color: #fff;
 }
 
@@ -44,4 +44,13 @@
 
 .btn-warning:hover, .btn.bg-gradient-warning:hover {
   color: #000;
+}
+
+.btn-white {
+  border: rem(1px) solid var(--bs-border-color);
+  box-shadow: 0 rem(1px) rem(2px) 0 rgba(12,26,36,.06);
+}
+
+.btn-action {
+  min-width: rem(150px);
 }
